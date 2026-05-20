@@ -2,41 +2,26 @@ import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { useTranslation } from "@/hooks/useTranslation";
+import AnimatedHeroTitle from "./AnimatedHeroTitle";
 
 const HeroSection = () => {
   const { t, locale } = useTranslation();
   const rootRef = useRef<HTMLElement>(null);
-  const line1Ref = useRef<HTMLSpanElement>(null);
-  const line2Ref = useRef<HTMLSpanElement>(null);
   const tagRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const splitLetters = (el: HTMLElement | null, text: string) => {
-        if (!el) return [];
-        el.innerHTML = "";
-        const spans: HTMLSpanElement[] = [];
-        Array.from(text).forEach((ch) => {
-          const s = document.createElement("span");
-          s.className = "hero-letter";
-          s.textContent = ch === " " ? " " : ch;
-          el.appendChild(s);
-          spans.push(s);
-        });
-        return spans;
-      };
-
-      const l1 = splitLetters(line1Ref.current, t("hero.title.line1"));
-      const l2 = splitLetters(line2Ref.current, t("hero.title.line2"));
-
-      gsap.set([tagRef.current, subRef.current, ctaRef.current], { opacity: 0, y: 30 });
+      gsap.set([tagRef.current, titleRef.current, subRef.current, ctaRef.current], {
+        opacity: 0,
+        y: 30,
+      });
 
       const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
       tl.to(tagRef.current, { opacity: 1, y: 0, duration: 0.7 }, 0.1)
-        .to(l1, { opacity: 1, y: 0, rotateX: 0, duration: 0.85, stagger: 0.04 }, 0.25)
-        .to(l2, { opacity: 1, y: 0, rotateX: 0, duration: 0.85, stagger: 0.04 }, 0.45)
+        .to(titleRef.current, { opacity: 1, y: 0, duration: 0.9 }, 0.3)
         .to(subRef.current, { opacity: 1, y: 0, duration: 0.7 }, 0.85)
         .to(ctaRef.current, { opacity: 1, y: 0, duration: 0.7 }, 1.0);
     }, rootRef);
@@ -80,9 +65,16 @@ const HeroSection = () => {
           {t("hero.tag")}
         </div>
 
-        <h1 className="h-display text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-coffee-50 mb-3 leading-[0.95]">
-          <span ref={line1Ref} className="block" />
-          <span ref={line2Ref} className="block shimmer-text" />
+        <h1
+          ref={titleRef}
+          className="h-display text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-coffee-50 mb-3 leading-[0.95]"
+        >
+          <span className="block">
+            <AnimatedHeroTitle text={t("hero.title.line1")} />
+          </span>
+          <span className="block shimmer-text">
+            <AnimatedHeroTitle text={t("hero.title.line2")} entranceDelay={0.3} />
+          </span>
         </h1>
 
         <p

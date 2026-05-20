@@ -301,6 +301,116 @@ body.cursor-hovering .cursor-ring {
   transform-origin: bottom;
 }
 
+/* ── Animated hero title — looping letter micro-animations ───────── */
+
+@keyframes heroLetterWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-3deg); }
+  40% { transform: rotate(3deg); }
+  60% { transform: rotate(-2deg); }
+  80% { transform: rotate(2deg); }
+}
+.hero-letter-wiggle {
+  animation: heroLetterWiggle 6s ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+  transform-origin: center bottom;
+}
+
+@keyframes heroLetterBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.hero-letter-bounce {
+  animation: heroLetterBounce 5s ease-in-out infinite;
+}
+
+@keyframes heroLetterFlip {
+  0%, 85%, 100% { transform: rotateY(0deg); }
+  90% { transform: rotateY(180deg); }
+  95% { transform: rotateY(360deg); }
+}
+.hero-letter-flip {
+  animation: heroLetterFlip 8s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes heroLetterGlow {
+  0%, 100% { text-shadow: 0 0 0 rgba(245,166,35,0); }
+  50% {
+    text-shadow:
+      0 0 18px rgba(245,166,35,0.65),
+      0 0 36px rgba(245,166,35,0.35);
+  }
+}
+.hero-letter-glow {
+  animation: heroLetterGlow 4s ease-in-out infinite;
+}
+
+@keyframes heroLetterFade {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+.hero-letter-fade {
+  animation: heroLetterFade 5s ease-in-out infinite;
+}
+
+@keyframes heroLetterScale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+.hero-letter-scale {
+  animation: heroLetterScale 4.5s ease-in-out infinite;
+}
+
+/* ── Coffee-bean swap-in effects for the O letters ────────────── */
+
+@keyframes heroBeanSpinIn {
+  0% { opacity: 0; transform: rotate(-540deg) scale(0); }
+  100% { opacity: 1; transform: rotate(0deg) scale(1); }
+}
+.hero-bean-spin-in {
+  animation: heroBeanSpinIn 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+             heroLetterWiggle 4s ease-in-out 0.85s infinite;
+}
+
+@keyframes heroBeanDropIn {
+  0% { opacity: 0; transform: translateY(-60px) rotate(-30deg); }
+  60% { opacity: 1; transform: translateY(8px) rotate(8deg); }
+  100% { opacity: 1; transform: translateY(0) rotate(0); }
+}
+.hero-bean-drop-in {
+  animation: heroBeanDropIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+             heroLetterBounce 4.5s ease-in-out 0.9s infinite;
+}
+
+@keyframes heroBeanGrowIn {
+  0% { opacity: 0; transform: scale(0); }
+  60% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.hero-bean-grow-in {
+  animation: heroBeanGrowIn 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+             heroLetterScale 4s ease-in-out 0.75s infinite;
+}
+
+@keyframes heroBeanFlipIn {
+  0% { opacity: 0; transform: rotateY(-180deg) scale(0.4); }
+  100% { opacity: 1; transform: rotateY(0deg) scale(1); }
+}
+.hero-bean-flip-in {
+  animation: heroBeanFlipIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+             heroLetterGlow 3.5s ease-in-out 0.8s infinite;
+}
+
+@keyframes heroBeanFadeIn {
+  0% { opacity: 0; transform: scale(0.6); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.hero-bean-fade-in {
+  animation: heroBeanFadeIn 0.7s ease-out both,
+             heroLetterFade 4s ease-in-out 0.7s infinite;
+}
+
 /* Section spacing */
 .section {
   padding: 5rem 1.25rem;
