@@ -57,7 +57,7 @@ const VideoScrubSection = () => {
   }, []);
 
   return (
-    <div ref={wrapperRef} className="relative h-[180vh] bg-coffee-900">
+    <div ref={wrapperRef} className="relative h-[130vh] bg-coffee-900">
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         <img
           ref={imageRef}
