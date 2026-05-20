@@ -1,0 +1,39 @@
+id,name,category,image,description
+3,Espresso,Hot Coffee,/menu/hot/espresso.png,Pure shot of intense espresso.
+4,Double Espresso,Hot Coffee,/menu/hot/double_espresso.png,Double shot of intense espresso.
+5,Cappuccino,Hot Coffee,/menu/hot/cappuccino.png,Rich espresso topped with steamed milk foam.
+15,Americano,Hot Coffee,/menu/hot/americano.png,"American coffee — simple and bold."
+33,French Vanilla Latte,Hot Coffee,/menu/hot/french_vanilla_latte.png,Espresso with steamed milk and vanilla.
+38,Hazelnut Soy Latte,Hot Coffee,/menu/hot/hazelnut_soy_latte.png,Espresso with soy and hazelnut.
+42,Mocha Nut Latte,Hot Coffee,/menu/hot/mocha_nut_latte.png,Espresso with hazelnut and white chocolate.
+45,Toffe Nut Latte,Hot Coffee,/menu/hot/toffe_nut_latte.png,Toffee nut and caramel latte.
+35,Turtle Cappuccino,Hot Coffee,/menu/hot/turtle_cappuccino.png,Espresso with dark chocolate and caramel.
+37,Vanilla Nut Coffee,Hot Coffee,/menu/hot/vanilla_nut_coffee.png,Coffee with vanilla and hazelnut.
+36,White Mocha Breve,Hot Coffee,/menu/hot/white_mocha_breve.png,White chocolate and espresso with half & half.
+50,White Mocha,Hot Coffee,/menu/hot/white_mocha.png,Espresso with white chocolate and steamed milk.
+51,Mocha,Hot Coffee,/menu/hot/mocha.png,Espresso with dark chocolate and steamed milk.
+52,Flat White,Hot Coffee,/menu/hot/flat_white.png,Strong espresso with silky microfoam.
+53,Coffee Latte,Hot Coffee,/menu/hot/coffee_latte.png,Espresso topped with smooth steamed milk.
+54,Hot Chocolate,Hot Coffee,/menu/hot/hot_choco.png,Rich melted chocolate with steamed milk.
+55,Zero Calorie Vanilla Latte,Hot Coffee,/menu/hot/zero_calorie_vanilla_latte.png,Espresso with sugar-free vanilla and steamed milk.
+34,Blueberry White Mocha,Hot Coffee,/menu/hot/blueberry_white_mocha.png,"White chocolate, blueberry, and espresso."
+28,Belgium Berry Shaker,Refresher Drinks,/menu/cold/belgium_berry_shaker.png,Chilled espresso with blackberry syrup and berries.
+29,Berries Iced Latte,Refresher Drinks,/menu/cold/berries_iced_latte.png,Espresso with blackberry and vanilla syrups.
+30,Caramel Iced Latte,Refresher Drinks,/menu/cold/caramel_iced_latte.png,"Espresso with caramel syrup, served cold."
+16,Caramel Macchiato,Refresher Drinks,/menu/cold/caramel_machiato.png,"A sweet mix of espresso, milk, and caramel drizzle over ice."
+1,Iced Americano,Refresher Drinks,/menu/cold/iced_americano.png,"Chilled espresso over ice — simple and bold."
+2,Iced Mocha,Refresher Drinks,/menu/cold/iced_mocha.png,"A cool mix of espresso, chocolate, and milk over ice."
+31,Iced Vanilla Latte,Refresher Drinks,/menu/cold/iced_vanilla_latte.png,Chilled espresso with vanilla syrup.
+6,Matcha,Refresher Drinks,/menu/cold/matcha.png,Ceremonial grade matcha with hot water.
+39,Sugar Free Iced Vanilla,Refresher Drinks,/menu/cold/sugar_free_iced_vanilla.png,Iced espresso with sugar-free vanilla.
+60,Iced Latte,Refresher Drinks,/menu/cold/iced_latte.png,Chilled espresso with cold milk over ice.
+61,Iced White Mocha,Refresher Drinks,/menu/cold/iced_white_mocha.png,White chocolate and espresso over ice.
+62,Lite Iced Caramel Macchiato,Refresher Drinks,/menu/cold/lite_iced_caramel_macchiato.png,A lighter take on the iced caramel macchiato.
+63,Berry Dream Spa,Refresher Drinks,/menu/cold/berry_dream_spa.png,Sparkling berry infusion with a hint of mint.
+64,Blackberry Spa Water,Refresher Drinks,/menu/cold/blackberry_spa_water.png,Cool sparkling water with fresh blackberries.
+65,Blackcurrant,Refresher Drinks,/menu/cold/blackcurrant.png,Refreshing blackcurrant cooler.
+66,Blackcurrant Italian Soda,Refresher Drinks,/menu/cold/blackcurrant_italian.png,Italian soda with rich blackcurrant syrup.
+67,Orange Sparkling,Refresher Drinks,/menu/cold/orange_sparkling.png,Fresh orange with a bubbly twist.
+68,Shirley Temple,Refresher Drinks,/menu/cold/shirley_temple.png,Sweet grenadine soda with a maraschino cherry.
+69,Tri Berry Soda,Refresher Drinks,/menu/cold/tri_berry_soda.png,A trio of berries in sparkling soda.
+70,Vanilla Berry Sparkling,Refresher Drinks,/menu/cold/vanilla_berry_sparkling.png,Sparkling vanilla and mixed berries.
