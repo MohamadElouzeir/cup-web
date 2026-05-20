@@ -1,9 +1,12 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Progressive-enhancement reveal: descendants with `.reveal-up`
- * fade/translate in when they scroll into view. Content stays
- * visible by default — if anything goes wrong, nothing disappears.
+ * Progressive reveal — elements with `.reveal-up` fade/translate in
+ * when they enter the viewport. Built to never leave anything hidden:
+ * - Elements already on screen are revealed immediately
+ * - IntersectionObserver reveals the rest
+ * - Hard 1.5s fail-safe forces anything stuck to show
+ * - On unmount, any leftover inline styles are cleared
  */
 export function useReveal<T extends HTMLElement = HTMLDivElement>() {
   const ref = useRef<T>(null);
@@ -14,24 +17,16 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>() {
     const els = Array.from(root.querySelectorAll<HTMLElement>(".reveal-up"));
     if (els.length === 0) return;
 
-    // Only hide things that are clearly below the fold at mount time.
-    const toAnimate: HTMLElement[] = [];
+    // Apply initial hidden state to all
     els.forEach((el) => {
-      const rect = el.getBoundingClientRect();
-      const isBelowFold = rect.top > window.innerHeight * 0.95;
-      if (isBelowFold) {
-        el.style.opacity = "0";
-        el.style.transform = "translateY(28px)";
-        el.style.transition =
-          "opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1)";
-        el.style.willChange = "opacity, transform";
-        toAnimate.push(el);
-      }
+      el.style.opacity = "0";
+      el.style.transform = "translateY(24px)";
+      el.style.transition =
+        "opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)";
+      el.style.willChange = "opacity, transform";
     });
 
-    if (toAnimate.length === 0) return;
-
-    const reveal = (el: HTMLElement, idx: number) => {
+    const show = (el: HTMLElement, idx: number) => {
       const delay = (idx % 4) * 60;
       window.setTimeout(() => {
         el.style.opacity = "1";
@@ -39,30 +34,49 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>() {
       }, delay);
     };
 
+    // Reveal anything already in (or above) the viewport immediately,
+    // after the next paint (so layout is finalized first)
+    const initialId = requestAnimationFrame(() => {
+      els.forEach((el, i) => {
+        const rect = el.getBoundingClientRect();
+        const visibleNow = rect.top < window.innerHeight * 0.92 && rect.bottom > 0;
+        if (visibleNow) show(el, i);
+      });
+    });
+
+    // Observe the rest
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const idx = toAnimate.indexOf(entry.target as HTMLElement);
-            reveal(entry.target as HTMLElement, idx === -1 ? 0 : idx);
+            const idx = els.indexOf(entry.target as HTMLElement);
+            show(entry.target as HTMLElement, idx === -1 ? 0 : idx);
             io.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.05, rootMargin: "0px 0px -8% 0px" }
+      { threshold: 0.05, rootMargin: "0px 0px -5% 0px" }
     );
-    toAnimate.forEach((el) => io.observe(el));
+    els.forEach((el) => io.observe(el));
 
-    // Hard fail-safe — after 2s reveal anything still hidden
+    // Hard fail-safe — at 1.5s force-reveal anything still hidden
     const failsafe = window.setTimeout(() => {
-      toAnimate.forEach((el, i) => {
-        if (el.style.opacity === "0") reveal(el, i);
+      els.forEach((el, i) => {
+        if (el.style.opacity === "0") show(el, i);
       });
-    }, 2000);
+    }, 1500);
 
     return () => {
-      io.disconnect();
+      cancelAnimationFrame(initialId);
       window.clearTimeout(failsafe);
+      io.disconnect();
+      // Strip styles so unmounted elements don't keep residual transforms
+      els.forEach((el) => {
+        el.style.opacity = "";
+        el.style.transform = "";
+        el.style.transition = "";
+        el.style.willChange = "";
+      });
     };
   }, []);
 
