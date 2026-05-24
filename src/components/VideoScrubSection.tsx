@@ -61,7 +61,7 @@ const VideoScrubSection = () => {
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         <img
           ref={imageRef}
-          src="/images/booth-exterior.webp"
+          src="/images/booth.jpg"
           alt="Cup S kiosk booth exterior"
           className="absolute inset-0 w-full h-full object-cover will-change-transform"
           loading="lazy"

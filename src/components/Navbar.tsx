@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { useTranslation } from "@/hooks/useTranslation";
-import CupSLogo from "./CupSLogo";
 
 const Navbar = () => {
   const { t, locale, setLocale } = useTranslation();
@@ -51,8 +50,8 @@ const Navbar = () => {
               : { padding: "0.6rem 1rem", background: "transparent", border: "1px solid transparent" }
           }
         >
-          <Link to="/" className="flex items-center gap-2 text-coffee-50 hover:text-amber-glow transition-colors">
-            <CupSLogo size={92} color="currentColor" />
+          <Link to="/" className="flex items-center gap-2">
+            <img src="/images/logo.jpg" alt="Cup S logo" className="h-12 w-auto object-contain" />
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
