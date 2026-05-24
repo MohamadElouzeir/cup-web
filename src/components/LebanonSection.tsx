@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslation } from "@/hooks/useTranslation";
-import CedarMark from "./CedarMark";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -78,10 +77,6 @@ const LebanonSection = () => {
       </div>
 
       <div className="relative z-10 container-page mx-auto text-center max-w-3xl px-2">
-        <div className="leb-cedar inline-block text-amber-glow mb-6">
-          <CedarMark size={72} />
-        </div>
-
         <div className="leb-content">
           <p className="text-amber-glow uppercase tracking-[0.4em] text-xs font-bold mb-4">
             Made in Lebanon

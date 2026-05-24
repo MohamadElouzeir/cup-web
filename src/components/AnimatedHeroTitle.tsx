@@ -69,22 +69,30 @@ const AnimatedHeroTitle = ({ text, className = "", entranceDelay = 0 }: Props) =
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   useEffect(() => {
-    // Clear previous timers on language/text change
     timersRef.current.forEach(clearTimeout);
     timersRef.current = [];
     setBeanStates({});
+
+    // Only one O can show as a bean at a time to keep the word readable
+    let activeIdx: number | null = null;
 
     const initialDelays = [2400, 4800, 7200];
     oIndices.forEach((idx, oi) => {
       const startToggle = (delay: number) => {
         const tid = setTimeout(() => {
-          const effect = BEAN_EFFECTS[Math.floor(Math.random() * BEAN_EFFECTS.length)];
-          setBeanStates((prev) => ({
-            ...prev,
-            [idx]: { showBean: !prev[idx]?.showBean, effect },
-          }));
-          const nextDelay = 3500 + Math.random() * 5500;
-          startToggle(nextDelay);
+          setBeanStates((prev) => {
+            const currently = prev[idx]?.showBean;
+            if (!currently && activeIdx !== null) {
+              // Another O is already a bean — skip this turn
+              startToggle(2000 + Math.random() * 2000);
+              return prev;
+            }
+            const next = !currently;
+            activeIdx = next ? idx : null;
+            const effect = BEAN_EFFECTS[Math.floor(Math.random() * BEAN_EFFECTS.length)];
+            startToggle(3500 + Math.random() * 5500);
+            return { ...prev, [idx]: { showBean: next, effect } };
+          });
         }, delay);
         timersRef.current.push(tid);
       };
