@@ -54,8 +54,8 @@ const Navbar = () => {
             <img
               src="/images/logo.jpg"
               alt="Cup S logo"
-              className="h-16 w-auto object-contain"
-              style={{ mixBlendMode: "screen" }}
+              className="h-20 w-auto object-contain"
+              style={{ mixBlendMode: "darken" }}
             />
           </Link>
 
