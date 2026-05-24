@@ -72,9 +72,7 @@ const HeroSection = () => {
           <span className="block">
             <AnimatedHeroTitle text={t("hero.title.line1")} />
           </span>
-          <span className="block shimmer-text">
-            <AnimatedHeroTitle text={t("hero.title.line2")} entranceDelay={0.3} />
-          </span>
+          <span className="block shimmer-text">{t("hero.title.line2")}</span>
         </h1>
 
         <p

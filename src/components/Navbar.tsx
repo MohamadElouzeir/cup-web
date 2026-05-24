@@ -50,12 +50,11 @@ const Navbar = () => {
               : { padding: "0.6rem 1rem", background: "transparent", border: "1px solid transparent" }
           }
         >
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2" aria-label="Cup S">
             <img
-              src="/images/logo.jpg"
+              src="/images/logo.png"
               alt="Cup S logo"
-              className="h-20 w-auto object-contain"
-              style={{ mixBlendMode: "darken" }}
+              className="h-14 w-auto object-contain"
             />
           </Link>
 
