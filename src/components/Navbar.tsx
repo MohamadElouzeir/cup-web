@@ -51,7 +51,12 @@ const Navbar = () => {
           }
         >
           <Link to="/" className="flex items-center gap-2">
-            <img src="/images/logo.jpg" alt="Cup S logo" className="h-12 w-auto object-contain" />
+            <img
+              src="/images/logo.jpg"
+              alt="Cup S logo"
+              className="h-16 w-auto object-contain"
+              style={{ mixBlendMode: "screen" }}
+            />
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">

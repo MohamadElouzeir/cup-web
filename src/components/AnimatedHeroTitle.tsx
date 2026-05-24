@@ -120,15 +120,14 @@ const AnimatedHeroTitle = ({ text, className = "", entranceDelay = 0 }: Props) =
         return (
           <span
             key={i}
-            className={`inline-block ${showBean ? "" : animClass}`}
-            style={showBean ? undefined : { animationDelay: `${delay.toFixed(2)}s` }}
+            className={`inline-block relative ${animClass}`}
+            style={{ animationDelay: `${delay.toFixed(2)}s` }}
           >
-            {showBean ? (
-              <span className={`inline-block ${bean.effect}`}>
+            <span className={showBean ? "opacity-0" : ""}>{char}</span>
+            {showBean && (
+              <span className={`absolute inset-0 flex items-center justify-center ${bean.effect}`}>
                 <CoffeeBeanSVG />
               </span>
-            ) : (
-              char
             )}
           </span>
         );
