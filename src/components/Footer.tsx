@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "@/hooks/useTranslation";
-import CupSLogo from "./CupSLogo";
 import { CONTACT } from "@/lib/config";
 
 const Footer = () => {
@@ -11,8 +10,12 @@ const Footer = () => {
     <footer className="relative mt-20 border-t border-white/5 bg-coffee-900/60">
       <div className="container-page mx-auto px-5 md:px-8 py-14 grid gap-10 md:grid-cols-3">
         <div>
-          <Link to="/" className="inline-block text-coffee-50">
-            <CupSLogo size={130} tagline />
+          <Link to="/" className="inline-block text-coffee-50" aria-label="Cup S">
+            <img
+              src="/images/logo.png"
+              alt="Cup S logo"
+              className="h-20 w-auto object-contain"
+            />
           </Link>
           <p className="mt-4 text-coffee-50/60 text-sm leading-relaxed max-w-xs">
             {t("footer.tag")}
