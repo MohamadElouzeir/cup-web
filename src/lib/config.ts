@@ -19,19 +19,19 @@ export const EMAILJS = {
 
 export const LOCATIONS = [
   {
-    id: "cheofat",
-    name: "Spot Cheofat",
-    nameAr: "سبوت شويفات",
-    coords: [33.7780, 35.5000] as [number, number],
-    address: "Cheofat, Mount Lebanon",
-    addressAr: "شويفات، جبل لبنان",
+    id: "choueifat",
+    name: "The Spot Choueifat",
+    nameAr: "ذا سبوت شويفات",
+    coords: [33.793139, 35.485417] as [number, number],
+    address: "Chouaifet El Aamroussieh, Mount Lebanon",
+    addressAr: "شويفات العمروسية، جبل لبنان",
     status: "deploying" as const,
   },
   {
     id: "verdun",
     name: "Verdun",
     nameAr: "فردان",
-    coords: [33.8830, 35.4890] as [number, number],
+    coords: [33.883916, 35.48333] as [number, number],
     address: "Verdun, Beirut",
     addressAr: "فردان، بيروت",
     status: "deploying" as const,
