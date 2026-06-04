@@ -7,6 +7,7 @@ export interface MenuItem {
   name: string;
   description: string;
   image: string;
+  logo?: string;
 }
 
 interface Props {
@@ -373,8 +374,18 @@ const MenuCard = ({
     </div>
 
     <div className="p-2.5 sm:p-3 text-center">
-      <h3 className="font-bold text-coffee-50 text-xs sm:text-sm leading-tight line-clamp-2">
-        {item.name}
+      <h3 className="font-bold text-coffee-50 text-xs sm:text-sm leading-tight line-clamp-2 flex items-center justify-center gap-1.5">
+        {item.logo && (
+          <img
+            src={item.logo}
+            alt=""
+            aria-hidden="true"
+            draggable={false}
+            className="w-5 h-5 sm:w-6 sm:h-6 object-contain shrink-0"
+            style={{ pointerEvents: "none" }}
+          />
+        )}
+        <span>{item.name}</span>
       </h3>
     </div>
   </article>

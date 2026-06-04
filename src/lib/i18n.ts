@@ -108,6 +108,7 @@ const en: Dict = {
   "menu.collapse": "Show less",
   "menu.hot": "Hot Coffee",
   "menu.cold": "Refresher Drinks",
+  "menu.soft": "Soft Drinks",
 
   // Locations page
   "loc.title": "Find a Kiosk",
@@ -238,6 +239,7 @@ const ar: Dict = {
   "menu.collapse": "عرض أقل",
   "menu.hot": "قهوة ساخنة",
   "menu.cold": "مشروبات منعشة",
+  "menu.soft": "مشروبات غازية",
 
   // Locations
   "loc.title": "اعثر على كشك",

@@ -3,7 +3,7 @@ import { useTranslation } from "@/hooks/useTranslation";
 import { parseCSV } from "@/lib/csv";
 import MenuWheel, { MenuItem } from "@/components/MenuWheel";
 
-type CategoryKey = "hot" | "cold";
+type CategoryKey = "hot" | "cold" | "soft";
 
 interface CategoryDef {
   key: CategoryKey;
@@ -32,6 +32,12 @@ const CoffeeMenuPage = () => {
       label: t("menu.cold"),
       banner: { type: "video", src: "/menu/banners/cold.mp4", poster: "/menu/banners/refresher.png" },
     },
+    {
+      key: "soft",
+      csvName: "Soft Drinks",
+      label: t("menu.soft"),
+      banner: { type: "image", src: "/menu/banners/soft.png" },
+    },
   ];
 
   useEffect(() => {
@@ -50,6 +56,7 @@ const CoffeeMenuPage = () => {
           name: r.name || "",
           description: r.description || "",
           image: r.image || "/menu/placeholder.png",
+          logo: r.logo || undefined,
         }));
         setItems(parsed);
       })
@@ -114,6 +121,19 @@ const CoffeeMenuPage = () => {
           >
             <source src="/menu/banners/cold.mp4" type="video/mp4" />
           </video>
+        </div>
+
+        {/* Soft drinks banner (image) */}
+        <div
+          className={`absolute inset-0 transition-opacity duration-700 ${
+            category === "soft" ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <img
+            src="/menu/banners/soft.png"
+            alt={t("menu.soft")}
+            className="w-full h-full object-cover"
+          />
         </div>
 
         <div className="absolute inset-0 bg-gradient-to-t from-coffee-900 via-coffee-900/40 to-coffee-900/60" />

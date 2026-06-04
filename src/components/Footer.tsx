@@ -12,7 +12,7 @@ const Footer = () => {
         <div>
           <Link to="/" className="inline-block text-coffee-50" aria-label="Cup S">
             <img
-              src="/images/logo.png"
+              src="/images/logo-light.png"
               alt="Cup S logo"
               className="h-20 w-auto object-contain"
             />

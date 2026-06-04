@@ -38,6 +38,11 @@ lerna-debug.log*
 # Original source assets at repo root (kept locally, not in repo)
 # Note: trailing slash + leading slash ensures public/menu/ is NOT ignored
 /menu/
+/Drink_Images_V7/
+/products_data.txt
+/BANNER*.png
+/*LOGO*.png
+/*logo*.png
 
 # TypeScript build info
 *.tsbuildinfo
