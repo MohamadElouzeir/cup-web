@@ -28,7 +28,7 @@ const CoffeeMenuPage = () => {
     },
     {
       key: "cold",
-      csvName: "Refresher Drinks",
+      csvName: "Cold Drinks",
       label: t("menu.cold"),
       banner: { type: "video", src: "/menu/banners/cold.mp4", poster: "/menu/banners/refresher.png" },
     },

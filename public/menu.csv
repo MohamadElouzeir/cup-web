@@ -18,30 +18,30 @@ id,name,category,image,logo,description
 43,Zero Calorie Vanilla Latte,Hot Coffee,/menu/hot/zero_calorie_vanilla_latte.png,,Espresso with sugar free vanilla syrup and almond milk.
 45,Toffe Nut Latte,Hot Coffee,/menu/hot/toffe_nut_latte.png,,"Espresso with caramel syrup, hazelnut syrup and milk."
 56,Hot Chocolate,Hot Coffee,/menu/hot/hot_choco.png,,A mix of Hot Chocolate pouder with your choice of milk.
-1,Iced Americano,Refresher Drinks,/menu/cold/iced_americano.png,,"Chilled espresso over ice, simple and bold."
-2,Iced Mocha,Refresher Drinks,/menu/cold/iced_mocha.png,,"A cool mix of espresso, chocolate syrup and milk over ice for a creamy, refreshing pick-me-up."
-10,Iced White Mocha,Refresher Drinks,/menu/cold/iced_white_mocha.png,,"A cool mix of espresso, white chocolate syrup, and milk over ice for a creamy, refreshing pick-me-up."
-16,Caramel Machiato,Refresher Drinks,/menu/cold/caramel_machiato.png,,"A sweet mix of espresso, milk, and caramel drizzle over ice for a smooth, indulgent treat."
-19,Iced Latte,Refresher Drinks,/menu/cold/iced_latte.png,,A classic mix of espresso and milk over ice.
-28,Belgium Berry Shaker,Refresher Drinks,/menu/cold/belgium_berry_shaker.png,,"Chilled espresso with blackberry syrup, milk and berries."
-29,Berries Iced Latte,Refresher Drinks,/menu/cold/berries_iced_latte.png,,"Espresso with blackberry syrup, vanilla syrup, milk and berries."
-30,Caramel Iced Latte,Refresher Drinks,/menu/cold/caramel_iced_latte.png,,"Espresso with caramel syrup and milk, served cold."
-31,Iced Vanilla Latte,Refresher Drinks,/menu/cold/iced_vanilla_latte.png,,Chilled espresso with vanilla syrup and milk.
-32,Lite Iced Caramel Macchiato,Refresher Drinks,/menu/cold/lite_iced_caramel_macchiato.png,,Espresso with a mix of sugar free caramel syrup and skimmed milk served cold.
-39,Sugar Free Iced Vanilla,Refresher Drinks,/menu/cold/sugar_free_iced_vanilla.png,,Espresso with sugar free vanilla syrup and milk.
-46,Tri Berry Sparkling,Refresher Drinks,/menu/cold/tri_berry_soda.png,,"A mix of strawberry, blueberry and blackberry syrups with sparkling water."
-49,Blackberry Spa Water,Refresher Drinks,/menu/cold/blackberry_spa_water.png,,Blackberry syrup with Sparkling water.
-50,Berry Dream Sparkling,Refresher Drinks,/menu/cold/berry_dream_spa.png,,A mix of blackberry and vanilla syrup with sparkling water.
-51,Vanilla Berry Sparkling,Refresher Drinks,/menu/cold/vanilla_berry_sparkling.png,,A mix of vanilla and strawberry syrup with sparkling water.
-52,Shirley Temple,Refresher Drinks,/menu/cold/shirley_temple.png,,A mix of grenadine and lime syrup with 7up for a very refreshing taste.
-53,Blackcurrant Italian Spa,Refresher Drinks,/menu/cold/blackcurrant_italian.png,,Grenadine syrup with sparkling water.
-54,Grenadine 7up,Refresher Drinks,/menu/cold/blackcurrant.png,,Grenadine syrup with 7up.
-55,Matcha,Refresher Drinks,/menu/cold/matcha.png,,A mix of Matcha pouder with your choice of milk.
-57,Lemonade Juice,Refresher Drinks,/menu/cold/lemonade_juice.png,,A refreshing Lemonade juice served cold over ice.
-58,Orange Juice,Refresher Drinks,/menu/cold/orange_juice.png,,A refreshing orange juice served cold over ice.
-59,Minted Lime Juice,Refresher Drinks,/menu/cold/minted_lemonade_juice.png,,A refreshing Lemonade juice with green mint syrup served cold over ice.
+1,Iced Americano,Cold Drinks,/menu/cold/iced_americano.png,,"Chilled espresso over ice, simple and bold."
+2,Iced Mocha,Cold Drinks,/menu/cold/iced_mocha.png,,"A cool mix of espresso, chocolate syrup and milk over ice for a creamy, refreshing pick-me-up."
+10,Iced White Mocha,Cold Drinks,/menu/cold/iced_white_mocha.png,,"A cool mix of espresso, white chocolate syrup, and milk over ice for a creamy, refreshing pick-me-up."
+16,Caramel Machiato,Cold Drinks,/menu/cold/caramel_machiato.png,,"A sweet mix of espresso, milk, and caramel drizzle over ice for a smooth, indulgent treat."
+19,Iced Latte,Cold Drinks,/menu/cold/iced_latte.png,,A classic mix of espresso and milk over ice.
+28,Belgium Berry Shaker,Cold Drinks,/menu/cold/belgium_berry_shaker.png,,"Chilled espresso with blackberry syrup, milk and berries."
+29,Berries Iced Latte,Cold Drinks,/menu/cold/berries_iced_latte.png,,"Espresso with blackberry syrup, vanilla syrup, milk and berries."
+30,Caramel Iced Latte,Cold Drinks,/menu/cold/caramel_iced_latte.png,,"Espresso with caramel syrup and milk, served cold."
+31,Iced Vanilla Latte,Cold Drinks,/menu/cold/iced_vanilla_latte.png,,Chilled espresso with vanilla syrup and milk.
+32,Lite Iced Caramel Macchiato,Cold Drinks,/menu/cold/lite_iced_caramel_macchiato.png,,Espresso with a mix of sugar free caramel syrup and skimmed milk served cold.
+39,Sugar Free Iced Vanilla,Cold Drinks,/menu/cold/sugar_free_iced_vanilla.png,,Espresso with sugar free vanilla syrup and milk.
+46,Tri Berry Sparkling,Cold Drinks,/menu/cold/tri_berry_soda.png,,"A mix of strawberry, blueberry and blackberry syrups with sparkling water."
+49,Blackberry Spa Water,Cold Drinks,/menu/cold/blackberry_spa_water.png,,Blackberry syrup with Sparkling water.
+50,Berry Dream Sparkling,Cold Drinks,/menu/cold/berry_dream_spa.png,,A mix of blackberry and vanilla syrup with sparkling water.
+51,Vanilla Berry Sparkling,Cold Drinks,/menu/cold/vanilla_berry_sparkling.png,,A mix of vanilla and strawberry syrup with sparkling water.
+52,Shirley Temple,Cold Drinks,/menu/cold/shirley_temple.png,,A mix of grenadine and lime syrup with 7up for a very refreshing taste.
+53,Blackcurrant Italian Spa,Cold Drinks,/menu/cold/blackcurrant_italian.png,,Grenadine syrup with sparkling water.
+54,Grenadine 7up,Cold Drinks,/menu/cold/blackcurrant.png,,Grenadine syrup with 7up.
+55,Matcha,Cold Drinks,/menu/cold/matcha.png,,A mix of Matcha pouder with your choice of milk.
+57,Lemonade Juice,Cold Drinks,/menu/cold/lemonade_juice.png,,A refreshing Lemonade juice served cold over ice.
+58,Orange Juice,Cold Drinks,/menu/cold/orange_juice.png,,A refreshing orange juice served cold over ice.
+59,Minted Lime Juice,Cold Drinks,/menu/cold/minted_lemonade_juice.png,,A refreshing Lemonade juice with green mint syrup served cold over ice.
 7,Pepsi,Soft Drinks,/menu/soft/pepsi.png,/menu/soft/pepsi_logo.png,Classic carbonated soft drink.
 11,Pepsi Diet,Soft Drinks,/menu/soft/pepsi.png,/menu/soft/pepsi_diet_logo.png,Classic carbonated diet soft drink.
 12,7up,Soft Drinks,/menu/soft/7up.png,/menu/soft/7up_logo.png,Classic carbonated soft drink.
-13,7up Zero Sugar,Soft Drinks,/menu/soft/7up_zero_sugar.png,/menu/soft/7up_diet_logo.png,Classic carbonated diet soft drink.
+13,7up Zero Sugar,Soft Drinks,/menu/soft/7up.png,/menu/soft/7up_diet_logo.png,Classic carbonated diet soft drink.
 14,Mirinda,Soft Drinks,/menu/soft/mirinda.png,/menu/soft/mirinda_logo.png,Classic carbonated soft drink.

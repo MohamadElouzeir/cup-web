@@ -107,7 +107,7 @@ const en: Dict = {
   "menu.expand": "Read more",
   "menu.collapse": "Show less",
   "menu.hot": "Hot Coffee",
-  "menu.cold": "Refresher Drinks",
+  "menu.cold": "Cold Drinks",
   "menu.soft": "Soft Drinks",
 
   // Locations page
@@ -238,7 +238,7 @@ const ar: Dict = {
   "menu.expand": "اقرأ المزيد",
   "menu.collapse": "عرض أقل",
   "menu.hot": "قهوة ساخنة",
-  "menu.cold": "مشروبات منعشة",
+  "menu.cold": "مشروبات باردة",
   "menu.soft": "مشروبات غازية",
 
   // Locations
