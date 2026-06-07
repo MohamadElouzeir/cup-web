@@ -64,7 +64,7 @@ const HowItWorks = () => {
               className="reveal-up group relative glass rounded-2xl p-7 md:p-9 overflow-hidden hover:border-amber-glow/30 transition-all duration-500 hover:-translate-y-1"
             >
               <div
-                className="absolute -top-8 -right-6 text-[7rem] md:text-[9rem] font-display font-black text-amber-glow/8 leading-none pointer-events-none select-none"
+                className="absolute top-2 right-3 text-[5rem] md:text-[6rem] font-display font-black text-amber-glow/15 leading-none pointer-events-none select-none"
                 aria-hidden="true"
               >
                 {s.n}
