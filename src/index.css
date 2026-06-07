@@ -5,16 +5,16 @@
 @tailwind utilities;
 
 :root {
-  --bg: 10 8 7;
-  --bg-soft: 22 16 11;
-  --bg-elev: 38 24 16;
-  --fg: 246 239 231;
-  --fg-muted: 200 180 160;
-  --accent: 245 166 35;
-  --accent-deep: 201 122 22;
-  --cedar: 200 156 82;
-  --glass-bg: 255 255 255 / 0.04;
-  --glass-border: 255 255 255 / 0.08;
+  --bg: 215 209 193;        /* beige #D7D1C1 */
+  --bg-soft: 205 199 183;
+  --bg-elev: 198 192 176;
+  --fg: 75 74 73;           /* dark grey #4B4A49 */
+  --fg-muted: 110 108 105;
+  --accent: 177 117 87;     /* brown #B17557 */
+  --accent-deep: 143 90 64;
+  --cedar: 177 117 87;
+  --glass-bg: 255 255 255 / 0.45;
+  --glass-border: 75 74 73 / 0.12;
 }
 
 * {
@@ -53,7 +53,7 @@ button {
 }
 
 ::selection {
-  background: rgba(245, 166, 35, 0.35);
+  background: rgba(177, 117, 87, 0.35);
   color: #fff;
 }
 
@@ -71,9 +71,9 @@ body::before {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(245, 166, 35, 0.10), transparent 60%),
-    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(200, 156, 82, 0.06), transparent 60%),
-    radial-gradient(ellipse 60% 50% at 0% 80%, rgba(124, 84, 48, 0.08), transparent 60%);
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(177, 117, 87, 0.10), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(177, 117, 87, 0.06), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 0% 80%, rgba(75, 74, 73, 0.05), transparent 60%);
   pointer-events: none;
   z-index: 0;
 }
@@ -86,15 +86,15 @@ body::before {
 
 /* Glass card */
 .glass {
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(75, 74, 73, 0.12);
   backdrop-filter: blur(16px) saturate(160%);
   -webkit-backdrop-filter: blur(16px) saturate(160%);
 }
 
 .glass-strong {
-  background: rgba(22, 16, 11, 0.72);
-  border: 1px solid rgba(245, 166, 35, 0.18);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(177, 117, 87, 0.30);
   backdrop-filter: blur(22px) saturate(180%);
   -webkit-backdrop-filter: blur(22px) saturate(180%);
 }
@@ -103,11 +103,11 @@ body::before {
 .shimmer-text {
   background: linear-gradient(
     90deg,
-    #c89c52 0%,
-    #f5a623 25%,
-    #fbd38d 50%,
-    #f5a623 75%,
-    #c89c52 100%
+    #8f5a40 0%,
+    #B17557 25%,
+    #c98f74 50%,
+    #B17557 75%,
+    #8f5a40 100%
   );
   background-size: 200% 100%;
   -webkit-background-clip: text;
@@ -164,8 +164,8 @@ html.lenis body {
 
 /* Buttons */
 .btn-primary {
-  background: linear-gradient(135deg, #f5a623, #c97a16);
-  color: #16100b;
+  background: linear-gradient(135deg, #B17557, #8f5a40);
+  color: #ffffff;
   font-weight: 700;
   padding: 0.85rem 1.75rem;
   border-radius: 999px;
@@ -173,7 +173,7 @@ html.lenis body {
   align-items: center;
   gap: 0.5rem;
   transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
-  box-shadow: 0 10px 30px -10px rgba(245, 166, 35, 0.5);
+  box-shadow: 0 10px 30px -10px rgba(177, 117, 87, 0.5);
   border: none;
   cursor: pointer;
   white-space: nowrap;
@@ -181,7 +181,7 @@ html.lenis body {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 18px 40px -10px rgba(245, 166, 35, 0.7);
+  box-shadow: 0 18px 40px -10px rgba(177, 117, 87, 0.7);
   filter: brightness(1.08);
 }
 
@@ -191,7 +191,7 @@ html.lenis body {
   font-weight: 600;
   padding: 0.85rem 1.5rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(75, 74, 73, 0.25);
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -201,8 +201,8 @@ html.lenis body {
 }
 
 .btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(245, 166, 35, 0.45);
+  background: rgba(177, 117, 87, 0.08);
+  border-color: rgba(177, 117, 87, 0.55);
   color: rgb(var(--accent));
 }
 
@@ -235,16 +235,16 @@ html[dir="rtl"] .h-display {
 
 /* Leaflet popup theming */
 .leaflet-popup-content-wrapper {
-  background: rgba(22, 16, 11, 0.95) !important;
-  color: #f6efe7 !important;
+  background: rgba(255, 255, 255, 0.97) !important;
+  color: #4B4A49 !important;
   border-radius: 14px !important;
-  border: 1px solid rgba(245, 166, 35, 0.25) !important;
+  border: 1px solid rgba(177, 117, 87, 0.30) !important;
 }
 .leaflet-popup-tip {
-  background: rgba(22, 16, 11, 0.95) !important;
+  background: rgba(255, 255, 255, 0.97) !important;
 }
 .leaflet-container {
-  background: #16100b !important;
+  background: #D7D1C1 !important;
   font-family: "Inter", sans-serif !important;
 }
 
@@ -256,7 +256,7 @@ html[dir="rtl"] .h-display {
   width: 12px;
   height: 12px;
   border-radius: 999px;
-  background: radial-gradient(circle, #fbd38d, #f5a623 40%, transparent 70%);
+  background: radial-gradient(circle, #c98f74, #B17557 40%, transparent 70%);
   pointer-events: none;
   mix-blend-mode: screen;
   z-index: 9999;
@@ -272,13 +272,13 @@ html[dir="rtl"] .h-display {
   width: 38px;
   height: 38px;
   border-radius: 999px;
-  border: 1.5px solid rgba(245, 166, 35, 0.55);
+  border: 1.5px solid rgba(177, 117, 87, 0.55);
   pointer-events: none;
   z-index: 9998;
   transform: translate(-50%, -50%);
   will-change: transform;
   transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, opacity 0.2s ease;
-  box-shadow: 0 0 24px rgba(245, 166, 35, 0.18);
+  box-shadow: 0 0 24px rgba(177, 117, 87, 0.18);
 }
 
 body.cursor-hovering .cursor-orb {
@@ -289,8 +289,8 @@ body.cursor-hovering .cursor-orb {
 body.cursor-hovering .cursor-ring {
   width: 64px;
   height: 64px;
-  border-color: rgba(251, 211, 141, 0.9);
-  box-shadow: 0 0 40px rgba(245, 166, 35, 0.4);
+  border-color: rgba(201, 143, 116, 0.9);
+  box-shadow: 0 0 40px rgba(177, 117, 87, 0.4);
 }
 
 /* Hero text — letter rise */
@@ -335,11 +335,11 @@ body.cursor-hovering .cursor-ring {
 }
 
 @keyframes heroLetterGlow {
-  0%, 100% { text-shadow: 0 0 0 rgba(245,166,35,0); }
+  0%, 100% { text-shadow: 0 0 0 rgba(177,117,87,0); }
   50% {
     text-shadow:
-      0 0 18px rgba(245,166,35,0.65),
-      0 0 36px rgba(245,166,35,0.35);
+      0 0 18px rgba(177,117,87,0.65),
+      0 0 36px rgba(177,117,87,0.35);
   }
 }
 .hero-letter-glow {

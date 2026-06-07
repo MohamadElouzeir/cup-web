@@ -132,7 +132,7 @@ const ContactPage = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder={t("contact.namePh")}
-              className="w-full bg-coffee-900/60 border border-white/10 focus:border-amber-glow rounded-xl px-4 py-3 text-coffee-50 placeholder-coffee-50/30 outline-none transition-colors"
+              className="w-full bg-white/80 border border-coffee-50/20 focus:border-amber-glow rounded-xl px-4 py-3 text-coffee-50 placeholder-coffee-50/40 outline-none transition-colors"
               required
             />
           </div>
@@ -147,7 +147,7 @@ const ContactPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={t("contact.emailPh")}
-              className="w-full bg-coffee-900/60 border border-white/10 focus:border-amber-glow rounded-xl px-4 py-3 text-coffee-50 placeholder-coffee-50/30 outline-none transition-colors"
+              className="w-full bg-white/80 border border-coffee-50/20 focus:border-amber-glow rounded-xl px-4 py-3 text-coffee-50 placeholder-coffee-50/40 outline-none transition-colors"
               required
             />
           </div>
@@ -162,7 +162,7 @@ const ContactPage = () => {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder={t("contact.messagePh")}
-              className="w-full bg-coffee-900/60 border border-white/10 focus:border-amber-glow rounded-xl px-4 py-3 text-coffee-50 placeholder-coffee-50/30 outline-none transition-colors resize-y"
+              className="w-full bg-white/80 border border-coffee-50/20 focus:border-amber-glow rounded-xl px-4 py-3 text-coffee-50 placeholder-coffee-50/40 outline-none transition-colors resize-y"
               required
             />
           </div>

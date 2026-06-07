@@ -46,12 +46,12 @@ const HeroSection = () => {
         >
           <source src="/videos/hero-coffee.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-coffee-900/65 via-coffee-900/45 to-coffee-900" />
+        <div className="absolute inset-0 bg-gradient-to-b from-coffee-900/80 via-coffee-900/70 to-coffee-900" />
         <div
           className="absolute inset-0 opacity-40 mix-blend-overlay"
           style={{
             backgroundImage:
-              "radial-gradient(ellipse 50% 40% at 50% 50%, rgba(245,166,35,0.35), transparent 60%)",
+              "radial-gradient(ellipse 50% 40% at 50% 50%, rgba(177,117,87,0.35), transparent 60%)",
           }}
         />
       </div>

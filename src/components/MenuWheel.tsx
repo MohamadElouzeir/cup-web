@@ -434,8 +434,8 @@ const RotationDial = ({ pageCount, rotation }: { pageCount: number; rotation: nu
               width: active ? 10 : 5,
               height: active ? 10 : 5,
               transform: `translate(calc(${x}px - 50%), calc(${y}px - 50%))`,
-              background: active ? "#f5a623" : "rgba(246,239,231,0.35)",
-              boxShadow: active ? "0 0 10px rgba(245,166,35,0.7)" : "none",
+              background: active ? "#B17557" : "rgba(75,74,73,0.30)",
+              boxShadow: active ? "0 0 10px rgba(177,117,87,0.7)" : "none",
             }}
           />
         );
@@ -446,8 +446,8 @@ const RotationDial = ({ pageCount, rotation }: { pageCount: number; rotation: nu
           width: 12,
           height: 12,
           transform: `translate(calc(${knobX}px - 50%), calc(${knobY}px - 50%))`,
-          background: "radial-gradient(circle, #fbd38d, #f5a623, #c97a16)",
-          boxShadow: "0 0 12px rgba(245,166,35,0.6), inset 0 0 0 1.5px rgba(255,255,255,0.5)",
+          background: "radial-gradient(circle, #c98f74, #B17557, #8f5a40)",
+          boxShadow: "0 0 12px rgba(177,117,87,0.6), inset 0 0 0 1.5px rgba(255,255,255,0.5)",
         }}
       />
     </div>

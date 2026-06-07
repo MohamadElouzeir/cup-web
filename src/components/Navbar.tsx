@@ -52,7 +52,7 @@ const Navbar = () => {
         >
           <Link to="/" className="flex items-center gap-2" aria-label="Cup S">
             <img
-              src="/images/logo-light.png"
+              src="/images/logo-bold.png"
               alt="Cup S logo"
               className="h-14 w-auto object-contain"
             />

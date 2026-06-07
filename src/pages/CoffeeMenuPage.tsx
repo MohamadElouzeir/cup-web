@@ -161,7 +161,7 @@ const CoffeeMenuPage = () => {
               onClick={() => setCategory(c.key)}
               className={`px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-sm font-bold uppercase tracking-wider transition-all ${
                 category === c.key
-                  ? "bg-gradient-to-r from-amber-glow to-amber-deep text-coffee-900 shadow-[0_10px_30px_-10px_rgba(245,166,35,0.55)]"
+                  ? "bg-gradient-to-r from-amber-glow to-amber-deep text-white shadow-[0_10px_30px_-10px_rgba(177,117,87,0.55)]"
                   : "glass text-coffee-50/80 hover:text-amber-glow hover:border-amber-glow/40"
               }`}
             >

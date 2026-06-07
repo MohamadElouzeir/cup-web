@@ -5,24 +5,27 @@ export default {
   theme: {
     extend: {
       colors: {
+        // NOTE: scale is intentionally light->dark so existing usages flip
+        // to a light theme. `coffee-50` (used as primary text) is now dark,
+        // `coffee-900` (used as page background) is now light beige.
         coffee: {
-          50: "#f6efe7",
-          100: "#e8d8c2",
-          200: "#c9a778",
-          300: "#a87a45",
-          400: "#7b5430",
-          500: "#4f3520",
-          600: "#3a2618",
-          700: "#261810",
-          800: "#16100b",
-          900: "#0a0807",
+          50: "#4B4A49",  // primary text — dark grey
+          100: "#5a5856", // muted dark
+          200: "#8a8782",
+          300: "#a39e96",
+          400: "#B17557", // brand brown (mid accent)
+          500: "#b9b3a6",
+          600: "#c7c1b4",
+          700: "#cfc9bb",
+          800: "#d2ccbe",
+          900: "#D7D1C1", // page background — beige
         },
         amber: {
-          glow: "#f5a623",
-          deep: "#c97a16",
-          soft: "#fbd38d",
+          glow: "#B17557", // brand brown (was gold)
+          deep: "#8f5a40", // darker brown
+          soft: "#c98f74", // lighter brown
         },
-        cedar: "#c89c52",
+        cedar: "#B17557",
       },
       fontFamily: {
         display: ['"Playfair Display"', "Georgia", "serif"],
@@ -41,8 +44,8 @@ export default {
           "50%": { transform: "translateY(-12px)" },
         },
         pulseGlow: {
-          "0%,100%": { boxShadow: "0 0 24px rgba(245,166,35,0.35)" },
-          "50%": { boxShadow: "0 0 60px rgba(245,166,35,0.65)" },
+          "0%,100%": { boxShadow: "0 0 24px rgba(177,117,87,0.35)" },
+          "50%": { boxShadow: "0 0 60px rgba(177,117,87,0.65)" },
         },
         shimmer: {
           "0%": { backgroundPosition: "-200% 0" },

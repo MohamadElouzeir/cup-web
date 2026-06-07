@@ -131,7 +131,7 @@ const ShopsPage = () => {
                 <span
                   className={`inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-sm font-bold tracking-wide uppercase transition-all ${
                     shop.available
-                      ? "bg-gradient-to-r from-amber-glow to-amber-deep text-coffee-900 group-hover:shadow-[0_10px_30px_-10px_rgba(245,166,35,0.6)] group-hover:scale-105"
+                      ? "bg-gradient-to-r from-amber-glow to-amber-deep text-white group-hover:shadow-[0_10px_30px_-10px_rgba(177,117,87,0.6)] group-hover:scale-105"
                       : "bg-white/5 text-coffee-50/70 border border-white/12 group-hover:border-amber-glow/35 group-hover:text-amber-glow"
                   }`}
                 >
