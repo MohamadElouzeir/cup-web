@@ -8,16 +8,16 @@ const BOOTHS = [
 const SLIDE_INTERVAL = 5000;
 
 /**
- * Sticky scenic section showing the kiosk booth exterior.
- * Crossfades between booth photos on a timer, and adds a parallax zoom on the
- * images driven by scroll progress. Uses native CSS `position: sticky` so
- * nothing survives a route change — the DOM cleans itself up on unmount.
+ * Scenic showcase of the kiosk booth.
+ * The booth photos are wide landscape shots, so they live inside a centered
+ * card with a matching aspect ratio — `object-cover` then fills the frame with
+ * the whole booth visible (no awkward viewport cropping). Crossfades between
+ * photos on a timer, with a gentle scroll-driven zoom kept inside the frame.
  */
 const VideoScrubSection = () => {
   const { t } = useTranslation();
-  const wrapperRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const imagesRef = useRef<HTMLDivElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
 
   // Auto-advance the booth slideshow.
@@ -29,11 +29,11 @@ const VideoScrubSection = () => {
     return () => clearInterval(id);
   }, []);
 
+  // Gentle parallax zoom as the card moves through the viewport.
   useEffect(() => {
-    const wrapper = wrapperRef.current;
+    const card = cardRef.current;
     const images = imagesRef.current;
-    const overlay = overlayRef.current;
-    if (!wrapper || !images) return;
+    if (!card || !images) return;
 
     let rafScheduled = false;
     let visible = false;
@@ -44,16 +44,12 @@ const VideoScrubSection = () => {
       requestAnimationFrame(() => {
         rafScheduled = false;
         if (!visible) return;
-        const rect = wrapper.getBoundingClientRect();
-        const total = rect.height - window.innerHeight;
-        if (total <= 0) return;
-        const raw = -rect.top / total;
-        const p = Math.min(1, Math.max(0, raw));
-        // Subtle zoom + slight translate for cinematic parallax
-        const scale = 1 + p * 0.12;
-        const translateY = (p - 0.5) * 60;
-        images.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`;
-        if (overlay) overlay.style.opacity = String(0.25 + p * 0.55);
+        const rect = card.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const raw = 1 - center / window.innerHeight; // ~ -0.5 .. 0.5 across screen
+        const p = Math.min(1, Math.max(0, raw + 0.5));
+        const scale = 1.04 + p * 0.06;
+        images.style.transform = `scale(${scale})`;
       });
     };
 
@@ -61,7 +57,7 @@ const VideoScrubSection = () => {
       (entries) => entries.forEach((e) => (visible = e.isIntersecting)),
       { threshold: 0 }
     );
-    io.observe(wrapper);
+    io.observe(card);
 
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
@@ -73,66 +69,59 @@ const VideoScrubSection = () => {
   }, []);
 
   return (
-    <div ref={wrapperRef} className="relative h-[130vh] bg-coffee-900">
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
-        <div ref={imagesRef} className="absolute inset-0 will-change-transform">
-          {BOOTHS.map((b, i) => (
-            <img
-              key={b.src}
-              src={b.src}
-              alt={b.alt}
-              className={`absolute inset-0 w-full h-full object-cover object-bottom transition-opacity duration-1000 ease-in-out ${
-                i === active ? "opacity-100" : "opacity-0"
-              }`}
-              loading="lazy"
-              decoding="async"
-            />
-          ))}
+    <section className="section">
+      <div className="container-page mx-auto">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <p className="text-amber-glow uppercase tracking-[0.3em] text-xs font-bold mb-3">
+            Our booth
+          </p>
+          <h2 className="h-display text-4xl md:text-6xl text-coffee-50 mb-4">
+            {t("how.s2.title")}
+          </h2>
+          <p className="text-coffee-50/65 text-lg">{t("how.s2.desc")}</p>
         </div>
-        {/* Top + bottom darkening so text always reads cleanly */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/65" />
-        {/* Center spotlight — strength grows with scroll progress */}
-        <div
-          ref={overlayRef}
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 55% 45% at 50% 50%, rgba(177,117,87,0.18), transparent 70%)",
-            opacity: 0.25,
-          }}
-        />
 
-        <div className="relative z-10 h-full flex items-center justify-center px-6 text-center">
-          <div className="max-w-3xl">
-            <p className="text-amber-soft uppercase tracking-[0.3em] text-xs font-bold mb-4 drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)]">
-              Our booth
-            </p>
-            <h2 className="h-display text-4xl md:text-7xl text-white mb-5 drop-shadow-[0_4px_18px_rgba(0,0,0,0.8)]">
-              {t("how.s2.title")}
-            </h2>
-            <p className="text-white/85 text-lg md:text-xl max-w-xl mx-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
-              {t("how.s2.desc")}
-            </p>
+        {/* Showcase card — aspect ratio matches the wide booth photos */}
+        <div
+          ref={cardRef}
+          className="relative mx-auto max-w-5xl rounded-3xl overflow-hidden border border-coffee-50/10 shadow-[0_30px_80px_-30px_rgba(75,74,73,0.45)] aspect-[16/10] bg-coffee-900"
+        >
+          <div ref={imagesRef} className="absolute inset-0 will-change-transform">
+            {BOOTHS.map((b, i) => (
+              <img
+                key={b.src}
+                src={b.src}
+                alt={b.alt}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+                  i === active ? "opacity-100" : "opacity-0"
+                }`}
+                loading="lazy"
+                decoding="async"
+              />
+            ))}
+          </div>
+
+          {/* Soft vignette so the frame edges feel intentional */}
+          <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_120px_rgba(0,0,0,0.35)]" />
+
+          {/* Slideshow dots */}
+          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2.5">
+            {BOOTHS.map((b, i) => (
+              <button
+                key={b.src}
+                onClick={() => setActive(i)}
+                aria-label={`Show booth ${i + 1}`}
+                className={`h-2.5 rounded-full transition-all duration-300 ${
+                  i === active
+                    ? "w-7 bg-amber-glow"
+                    : "w-2.5 bg-white/60 hover:bg-white/90"
+                }`}
+              />
+            ))}
           </div>
         </div>
-
-        {/* Slideshow dots */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2.5">
-          {BOOTHS.map((b, i) => (
-            <button
-              key={b.src}
-              onClick={() => setActive(i)}
-              aria-label={`Show booth ${i + 1}`}
-              className={`h-2.5 rounded-full transition-all duration-300 ${
-                i === active
-                  ? "w-7 bg-amber-glow"
-                  : "w-2.5 bg-white/50 hover:bg-white/80"
-              }`}
-            />
-          ))}
-        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
