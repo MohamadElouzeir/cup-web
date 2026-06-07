@@ -160,11 +160,11 @@ const CoffeeBeanIntro = () => {
       barBeanAngle += 0.05;
 
       ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = "#0a0807";
+      ctx.fillStyle = "#D7D1C1";
       ctx.fillRect(0, 0, W, H);
 
       const glow = ctx.createRadialGradient(W / 2, H * 0.45, 0, W / 2, H * 0.45, W * 0.6);
-      glow.addColorStop(0, "rgba(245,166,35,0.12)");
+      glow.addColorStop(0, "rgba(177,117,87,0.12)");
       glow.addColorStop(1, "transparent");
       ctx.fillStyle = glow;
       ctx.fillRect(0, 0, W, H);
@@ -199,16 +199,16 @@ const CoffeeBeanIntro = () => {
       ctx.save();
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillStyle = "rgba(245,166,35,0.95)";
+      ctx.fillStyle = "rgba(177,117,87,0.95)";
       ctx.font = `700 ${Math.min(W * 0.09, 72)}px 'Playfair Display', Georgia, serif`;
       ctx.fillText("Cup S", W / 2, H * 0.38);
 
-      ctx.fillStyle = "rgba(246,239,231,0.42)";
+      ctx.fillStyle = "rgba(75,74,73,0.60)";
       ctx.font = `600 ${Math.min(W * 0.022, 12)}px 'Inter', sans-serif`;
       ctx.fillText("BREWED FOR TASTE", W / 2, H * 0.44);
       ctx.restore();
 
-      ctx.fillStyle = "rgba(255,255,255,0.08)";
+      ctx.fillStyle = "rgba(75,74,73,0.12)";
       ctx.beginPath();
       if (ctx.roundRect) ctx.roundRect(BAR_X, BAR_Y, BAR_W, BAR_H, 2);
       else ctx.rect(BAR_X, BAR_Y, BAR_W, BAR_H);
@@ -217,9 +217,9 @@ const CoffeeBeanIntro = () => {
       const fillW = frac * BAR_W;
       if (fillW > 0) {
         const grad = ctx.createLinearGradient(BAR_X, 0, BAR_X + BAR_W, 0);
-        grad.addColorStop(0, "#6b3e26");
-        grad.addColorStop(0.5, "#c97a16");
-        grad.addColorStop(1, "#f5a623");
+        grad.addColorStop(0, "#8f5a40");
+        grad.addColorStop(0.5, "#B17557");
+        grad.addColorStop(1, "#c98f74");
         ctx.fillStyle = grad;
         ctx.beginPath();
         if (ctx.roundRect) ctx.roundRect(BAR_X, BAR_Y, fillW, BAR_H, 2);
@@ -233,7 +233,7 @@ const CoffeeBeanIntro = () => {
         const pulse = Math.sin(performance.now() * 0.007) * 2.5;
 
         const halo = ctx.createRadialGradient(bx, by, 0, bx, by, 30);
-        halo.addColorStop(0, "rgba(245,166,35,0.3)");
+        halo.addColorStop(0, "rgba(177,117,87,0.3)");
         halo.addColorStop(1, "transparent");
         ctx.fillStyle = halo;
         ctx.beginPath();
@@ -247,7 +247,7 @@ const CoffeeBeanIntro = () => {
       ctx.save();
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillStyle = "rgba(245,166,35,0.75)";
+      ctx.fillStyle = "rgba(177,117,87,0.85)";
       ctx.font = `500 ${Math.min(W * 0.024, 14)}px 'Inter', sans-serif`;
       ctx.fillText(`${count}%`, BAR_X + fillW, BAR_Y + 22);
       ctx.restore();
