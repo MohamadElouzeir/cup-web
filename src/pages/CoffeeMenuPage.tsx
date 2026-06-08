@@ -89,9 +89,9 @@ const CoffeeMenuPage = () => {
   }, [items, activeCat]);
 
   return (
-    <section className="pt-20 sm:pt-24 md:pt-28 pb-12 md:pb-16">
-      {/* Banner header — full width, ample height, lots of breathing room */}
-      <div className="relative w-full h-[42vh] sm:h-[46vh] md:h-[52vh] min-h-[280px] max-h-[520px] overflow-hidden">
+    <section className="pb-12 md:pb-16">
+      {/* Banner header — full width, starts from top (under fixed navbar) */}
+      <div className="relative w-full h-[52vh] sm:h-[56vh] md:h-[62vh] min-h-[320px] max-h-[580px] overflow-hidden">
         {/* Hot banner (image) */}
         <div
           className={`absolute inset-0 transition-opacity duration-700 ${
