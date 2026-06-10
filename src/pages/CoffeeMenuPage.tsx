@@ -89,47 +89,70 @@ const CoffeeMenuPage = () => {
   }, [items, activeCat]);
 
   return (
-    <section className="pb-12 md:pb-16">
-      {/* Banner header — full marketing graphic shown in full (no crop), with
-          clearance below the fixed navbar. Page background letterboxes cleanly. */}
-      <div className="relative w-full pt-20 sm:pt-24 md:pt-28">
-        <div className="relative w-full aspect-[2/1] max-h-[60vh] overflow-hidden">
-          {/* Hot banner (image) */}
+    <section className="pt-20 sm:pt-24 md:pt-28 pb-12 md:pb-16">
+      {/* Banner header — full width, ample height, lots of breathing room */}
+      <div className="relative w-full h-[42vh] sm:h-[46vh] md:h-[52vh] min-h-[280px] max-h-[520px] overflow-hidden">
+        {/* Hot banner (image) */}
+        <div
+          className={`absolute inset-0 transition-opacity duration-700 ${
+            category === "hot" ? "opacity-100" : "opacity-0"
+          }`}
+        >
           <img
             src="/menu/banners/hot.png"
             alt={t("menu.hot")}
-            className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-700 ${
-              category === "hot" ? "opacity-100" : "opacity-0 pointer-events-none"
-            }`}
+            className="w-full h-full object-cover"
           />
+        </div>
 
-          {/* Cold banner (video) */}
+        {/* Cold banner (video) */}
+        <div
+          className={`absolute inset-0 transition-opacity duration-700 ${
+            category === "cold" ? "opacity-100" : "opacity-0"
+          }`}
+        >
           <video
             ref={videoRef}
             loop
             muted
             playsInline
             poster="/menu/banners/refresher.png"
-            className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-700 ${
-              category === "cold" ? "opacity-100" : "opacity-0 pointer-events-none"
-            }`}
+            className="w-full h-full object-cover"
           >
             <source src="/menu/banners/cold.mp4" type="video/mp4" />
           </video>
+        </div>
 
-          {/* Soft drinks banner (image) */}
+        {/* Soft drinks banner (image) */}
+        <div
+          className={`absolute inset-0 transition-opacity duration-700 ${
+            category === "soft" ? "opacity-100" : "opacity-0"
+          }`}
+        >
           <img
             src="/menu/banners/soft.png"
             alt={t("menu.soft")}
-            className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-700 ${
-              category === "soft" ? "opacity-100" : "opacity-0 pointer-events-none"
-            }`}
+            className="w-full h-full object-cover"
           />
+        </div>
+
+        <div className="absolute inset-0 bg-gradient-to-t from-coffee-900 via-coffee-900/40 to-coffee-900/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-coffee-900/65 via-transparent to-transparent" />
+
+        <div className="relative z-10 h-full flex items-end justify-center pb-8 sm:pb-10 md:pb-12 px-4">
+          <div className="text-center max-w-2xl">
+            <p className="text-amber-glow uppercase tracking-[0.3em] text-[10px] sm:text-xs font-bold mb-2 sm:mb-3">
+              Intelligent Coffee
+            </p>
+            <h1 className="h-display text-4xl sm:text-5xl md:text-7xl text-coffee-50 leading-tight drop-shadow-[0_4px_18px_rgba(0,0,0,0.7)]">
+              {activeCat.label}
+            </h1>
+          </div>
         </div>
       </div>
 
       {/* Content */}
-      <div className="container-page mx-auto px-4 sm:px-6 md:px-8 mt-8 sm:mt-10 md:mt-12">
+      <div className="container-page mx-auto px-4 sm:px-6 md:px-8 mt-14 sm:mt-16 md:mt-20">
         {/* Category pills */}
         <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10 sm:mb-14">
           {categories.map((c) => (

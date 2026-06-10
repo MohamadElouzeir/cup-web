@@ -189,15 +189,9 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
     const x = radius * Math.sin(angle);
     const z = radius * Math.cos(angle);
     const depth = (z + radius) / (2 * radius);
-    // Keep the front page at full size (depth=1 → scale 1) so every cup on the
-    // active page is identical; neighbours shrink only slightly during the turn.
-    const scale = 0.82 + Math.pow(depth, 2) * 0.18;
-    const rotateY = Math.sin(angle) * -32;
-    // Sharp opacity falloff: at rest only the front page is visible (all cups
-    // same size); mid-turn the neighbours fade in so the wheel still "spins".
-    // Below ~0.55 depth the page is effectively a back-of-wheel neighbour → hide
-    // it so it never bleeds in beside the active page.
-    const opacity = depth < 0.55 ? 0 : Math.pow((depth - 0.55) / 0.45, 2);
+    const scale = 0.6 + Math.pow(depth, 1.6) * 0.42;
+    const rotateY = Math.sin(angle) * -45;
+    const opacity = depth < 0.4 ? 0.25 : depth < 0.7 ? 0.55 : 1;
     const isFront =
       i === ((Math.round(-rotation / step) % pageCount) + pageCount) % pageCount;
     return { i, slice, x, z, depth, scale, rotateY, opacity, isFront };
@@ -310,13 +304,13 @@ const MenuCard = ({
       open ? "border-amber-glow/60 shadow-[0_15px_40px_-15px_rgba(245,166,35,0.55)]" : "border-white/8"
     } ${interactive ? "cursor-pointer" : ""} transition-all`}
   >
-    <div className="aspect-square bg-gradient-to-b from-coffee-700/30 to-coffee-800/40 relative overflow-hidden">
+    <div className="aspect-square bg-gradient-to-b from-coffee-700/30 to-coffee-800/40 relative overflow-hidden flex items-center justify-center">
       <img
         src={item.image}
         alt={item.name}
         loading="lazy"
         draggable={false}
-        className="w-full h-full object-contain transition-all duration-500"
+        className="h-[82%] w-auto max-w-[88%] object-contain transition-all duration-500"
         style={{
           transform: open ? "scale(1.08)" : undefined,
           filter: open ? "blur(2px)" : undefined,
