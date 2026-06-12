@@ -74,16 +74,13 @@ const ContactPage = () => {
         // Demo mode — pretend it worked so the UI can be reviewed without keys
         await new Promise((r) => setTimeout(r, 900));
       } else {
-        await emailjs.send(
-          EMAILJS.serviceId,
-          EMAILJS.templateId,
-          {
-            name: name.trim(),
-            email: email.trim(),
-            message: message.trim(),
-          },
-          { publicKey: EMAILJS.publicKey }
-        );
+        const params = {
+          name: name.trim(),
+          email: email.trim(),
+          message: message.trim(),
+        };
+        await emailjs.send(EMAILJS.serviceId, EMAILJS.templateId, params, { publicKey: EMAILJS.publicKey });
+        await emailjs.send(EMAILJS.serviceId, "template_n9kdo07", params, { publicKey: EMAILJS.publicKey });
       }
 
       recordSend();
