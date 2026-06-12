@@ -1,5 +1,75 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "@/hooks/useTranslation";
+
+/**
+ * The drink PNGs share the same file height but the cup artwork inside has
+ * varying transparent padding (e.g. the espresso cup fills ~78% of its image,
+ * the cappuccino ~93%), which made cups render at visibly different sizes.
+ * Measure the opaque bounding box once per image and scale/offset it so the
+ * CUP itself always renders at the same height, optically centred.
+ */
+const CUP_TARGET = 74; // cup content height as % of the card's image box
+const fitCache = new Map<string, { heightPct: number; dyPct: number }>();
+
+const measureCupFit = (img: HTMLImageElement) => {
+  const w = img.naturalWidth;
+  const h = img.naturalHeight;
+  if (!w || !h) return null;
+  const canvas = document.createElement("canvas");
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return null;
+  ctx.drawImage(img, 0, 0);
+  let data: Uint8ClampedArray;
+  try {
+    data = ctx.getImageData(0, 0, w, h).data;
+  } catch {
+    return null; // tainted canvas (cross-origin) — keep default sizing
+  }
+  const rowHasInk = (y: number) => {
+    for (let x = 0; x < w; x++) if (data[(y * w + x) * 4 + 3] > 16) return true;
+    return false;
+  };
+  let minY = 0;
+  while (minY < h && !rowHasInk(minY)) minY++;
+  if (minY === h) return null; // fully transparent
+  let maxY = h - 1;
+  while (maxY > minY && !rowHasInk(maxY)) maxY--;
+
+  const contentRatio = (maxY - minY + 1) / h;
+  // Render the image taller/shorter so the cup itself hits CUP_TARGET.
+  const heightPct = Math.min(96, CUP_TARGET / contentRatio);
+  // Shift so the cup (not the padded file) is what sits centred in the box.
+  const dyPct = ((h / 2 - (minY + maxY) / 2) / h) * 100;
+  return { heightPct, dyPct };
+};
+
+const useCupFit = (src: string) => {
+  const [fit, setFit] = useState(() => fitCache.get(src) ?? null);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  const onLoad = useCallback(() => {
+    const img = imgRef.current;
+    if (!img || fitCache.has(src)) {
+      if (fitCache.has(src)) setFit(fitCache.get(src)!);
+      return;
+    }
+    const m = measureCupFit(img);
+    if (m) {
+      fitCache.set(src, m);
+      setFit(m);
+    }
+  }, [src]);
+
+  // Cached images may already be complete before onLoad is attached.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img?.complete && img.naturalWidth) onLoad();
+  }, [onLoad]);
+
+  return { imgRef, fit, onLoad };
+};
 
 export interface MenuItem {
   id: string;
@@ -189,9 +259,13 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
     const x = radius * Math.sin(angle);
     const z = radius * Math.cos(angle);
     const depth = (z + radius) / (2 * radius);
-    const scale = 0.6 + Math.pow(depth, 1.6) * 0.42;
-    const rotateY = Math.sin(angle) * -45;
-    const opacity = depth < 0.4 ? 0.25 : depth < 0.7 ? 0.55 : 1;
+    // Front page lands at exactly scale 1 / no tilt. Neighbours stay visible in
+    // the background but smaller and gently tilted — a 45° tilt let perspective
+    // blow the near edge of side pages up to front-cup size ("right cups look
+    // bigger"), so keep the tilt moderate.
+    const scale = 0.52 + Math.pow(depth, 1.5) * 0.48;
+    const rotateY = Math.sin(angle) * -22;
+    const opacity = depth < 0.4 ? 0.2 : depth < 0.7 ? 0.45 : 1;
     const isFront =
       i === ((Math.round(-rotation / step) % pageCount) + pageCount) % pageCount;
     return { i, slice, x, z, depth, scale, rotateY, opacity, isFront };
@@ -218,7 +292,7 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
             key={c.i}
             className="absolute top-1/2 left-1/2"
             style={{
-              transform: `translate3d(${c.x}px, -50%, ${c.z * 0.15}px) translateX(-50%) rotateY(${c.rotateY}deg) scale(${c.scale})`,
+              transform: `translate3d(${c.x}px, -50%, ${(c.z - radius) * 0.15}px) translateX(-50%) rotateY(${c.rotateY}deg) scale(${c.scale})`,
               opacity: c.opacity,
               zIndex: 10 + Math.round(c.depth * 100),
               pointerEvents: c.isFront ? "auto" : "none",
@@ -296,7 +370,10 @@ const MenuCard = ({
   item: MenuItem;
   interactive: boolean;
   open: boolean;
-}) => (
+}) => {
+  const { imgRef, fit, onLoad } = useCupFit(item.image);
+
+  return (
   <article
     data-menu-card={item.id}
     aria-expanded={open}
@@ -306,16 +383,19 @@ const MenuCard = ({
   >
     <div className="aspect-square bg-gradient-to-b from-coffee-700/30 to-coffee-800/40 relative overflow-hidden flex items-center justify-center">
       <img
+        ref={imgRef}
         src={item.image}
         alt={item.name}
         loading="lazy"
         draggable={false}
-        className="h-[82%] w-auto max-w-[88%] object-contain transition-all duration-500"
+        className="w-auto max-w-[92%] object-contain transition-all duration-500"
         style={{
-          transform: open ? "scale(1.08)" : undefined,
+          height: `${fit ? fit.heightPct : 82}%`,
+          transform: `${open ? "scale(1.08) " : ""}translateY(${fit ? fit.dyPct : 0}%)`,
           filter: open ? "blur(2px)" : undefined,
           pointerEvents: "none",
         }}
+        onLoad={onLoad}
         onError={(e) => {
           const tgt = e.currentTarget;
           tgt.src =
@@ -389,7 +469,8 @@ const MenuCard = ({
       </h3>
     </div>
   </article>
-);
+  );
+};
 
 /** Decorative rotating dial that visualizes the current page. */
 const RotationDial = ({ pageCount, rotation }: { pageCount: number; rotation: number }) => {
