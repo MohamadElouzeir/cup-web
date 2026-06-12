@@ -10,10 +10,9 @@ export const CONTACT = {
 };
 
 export const EMAILJS = {
-  publicKey: "YOUR_EMAILJS_PUBLIC_KEY",
-  serviceId: "YOUR_SERVICE_ID",
-  templateId: "YOUR_TEMPLATE_ID",
-  /** "to_email" param if your template uses one */
+  publicKey: "MFe440MiZfgWb8ZWT",
+  serviceId: "service_8nuh8wo",
+  templateId: "template_2qnh49o",
   toEmail: CONTACT.email,
 };
 

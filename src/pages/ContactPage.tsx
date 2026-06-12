@@ -78,10 +78,9 @@ const ContactPage = () => {
           EMAILJS.serviceId,
           EMAILJS.templateId,
           {
-            from_name: name.trim(),
-            from_email: email.trim(),
+            name: name.trim(),
+            email: email.trim(),
             message: message.trim(),
-            to_email: EMAILJS.toEmail,
           },
           { publicKey: EMAILJS.publicKey }
         );
