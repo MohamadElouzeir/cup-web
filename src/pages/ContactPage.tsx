@@ -1,9 +1,12 @@
 import { FormEvent, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
+import ReCAPTCHA from "react-google-recaptcha";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useReveal } from "@/hooks/useReveal";
 import { CONTACT, EMAILJS } from "@/lib/config";
 import BeanTrail from "@/components/BeanTrail";
+
+const RECAPTCHA_SITE_KEY = "6LdPlAAsAAAAAD4VvdtMqcy-7bh_EedmnOitAyqt";
 
 const HISTORY_KEY = "cups_contact_history";
 const RATE_LIMIT = 5;
@@ -13,10 +16,12 @@ const ContactPage = () => {
   const { t } = useTranslation();
   const ref = useReveal<HTMLElement>();
   const formRef = useRef<HTMLFormElement>(null);
+  const captchaRef = useRef<ReCAPTCHA>(null);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [captchaDone, setCaptchaDone] = useState(false);
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "err">("idle");
   const [errMsg, setErrMsg] = useState<string>("");
 
@@ -25,6 +30,7 @@ const ContactPage = () => {
     if (message.trim().length < 10) return t("contact.shortMsg");
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!re.test(email.trim())) return t("contact.badEmail");
+    if (!captchaDone) return t("contact.captcha");
 
     // Rate limit
     const now = Date.now();
@@ -71,7 +77,6 @@ const ContactPage = () => {
         EMAILJS.templateId.startsWith("YOUR_");
 
       if (isPlaceholder) {
-        // Demo mode — pretend it worked so the UI can be reviewed without keys
         await new Promise((r) => setTimeout(r, 900));
       } else {
         const params = {
@@ -88,6 +93,8 @@ const ContactPage = () => {
       setName("");
       setEmail("");
       setMessage("");
+      setCaptchaDone(false);
+      captchaRef.current?.reset();
     } catch (e) {
       console.error(e);
       setErrMsg(t("contact.error"));
@@ -160,6 +167,16 @@ const ContactPage = () => {
               placeholder={t("contact.messagePh")}
               className="w-full bg-white/80 border border-coffee-50/20 focus:border-amber-glow rounded-xl px-4 py-3 text-coffee-50 placeholder-coffee-50/40 outline-none transition-colors resize-y"
               required
+            />
+          </div>
+
+          <div className="flex justify-center">
+            <ReCAPTCHA
+              ref={captchaRef}
+              sitekey={RECAPTCHA_SITE_KEY}
+              onChange={(token) => setCaptchaDone(!!token)}
+              onExpired={() => setCaptchaDone(false)}
+              theme="dark"
             />
           </div>
 

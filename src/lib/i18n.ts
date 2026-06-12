@@ -135,6 +135,7 @@ const en: Dict = {
   "contact.shortMsg": "Message must be at least 10 characters.",
   "contact.badEmail": "Please enter a valid email address.",
   "contact.rateLimit": "Too many attempts. Please try again later.",
+  "contact.captcha": "Please complete the reCAPTCHA verification.",
 
   // Footer
   "footer.rights": "All rights reserved.",
@@ -266,6 +267,7 @@ const ar: Dict = {
   "contact.shortMsg": "يجب أن تحتوي الرسالة على ١٠ أحرف على الأقل.",
   "contact.badEmail": "يرجى إدخال بريد إلكتروني صحيح.",
   "contact.rateLimit": "محاولات كثيرة. يرجى المحاولة لاحقاً.",
+  "contact.captcha": "يرجى إكمال التحقق من reCAPTCHA.",
 
   // Footer
   "footer.rights": "جميع الحقوق محفوظة.",
