@@ -195,7 +195,7 @@ const ContactPage = () => {
               href={CONTACT.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-emerald-500/15 border border-emerald-400/40 text-emerald-300 font-semibold text-sm hover:bg-emerald-500/25 transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#25D366] border border-[#1da851] text-white font-semibold text-sm hover:bg-[#1da851] transition-colors shadow-md"
             >
               <svg viewBox="0 0 32 32" className="w-5 h-5" fill="currentColor">
                 <path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.9c1.9.9 4 1.4 6.3 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.6c-2 0-3.9-.5-5.6-1.4l-.4-.2-4.5 1.1 1.2-4.4-.3-.4c-1-1.7-1.5-3.7-1.5-5.7 0-5.6 4.5-10.1 10.1-10.1S26.1 8.4 26.1 14 21.6 24.6 16 24.6zm5.6-7.3c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.4.1-.2 0-.3 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.7 1.2 2.9.1.2 2 3.1 4.9 4.4 1.8.7 2.5.8 3.4.6.5-.1 1.8-.7 2-1.5.3-.7.3-1.4.2-1.5-.1-.1-.3-.2-.6-.3z" />
