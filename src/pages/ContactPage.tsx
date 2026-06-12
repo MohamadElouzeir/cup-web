@@ -6,7 +6,7 @@ import { useReveal } from "@/hooks/useReveal";
 import { CONTACT, EMAILJS } from "@/lib/config";
 import BeanTrail from "@/components/BeanTrail";
 
-const RECAPTCHA_SITE_KEY = "6LdPlAAsAAAAAD4VvdtMqcy-7bh_EedmnOitAyqt";
+const RECAPTCHA_SITE_KEY = "6LfDOhstAAAAAFxCGvTlHahN3eXmCwjG0hloYp22";
 
 const HISTORY_KEY = "cups_contact_history";
 const RATE_LIMIT = 5;
