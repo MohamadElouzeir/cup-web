@@ -97,9 +97,17 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
   const animRef = useRef<number>(0);
 
   const [width, setWidth] = useState(0);
-  const [rotation, setRotation] = useState(0);
+  const [rotation, setRotationState] = useState(0);
   const [page, setPage] = useState(0);
   const [openId, setOpenId] = useState<string | null>(null);
+
+  // Native touch/mouse handlers (attached in a useEffect below) need the live
+  // rotation without going stale, so mirror it in a ref and update both at once.
+  const rotationRef = useRef(0);
+  const setRotation = useCallback((v: number) => {
+    rotationRef.current = v;
+    setRotationState(v);
+  }, []);
 
   const perPage =
     itemsPerPage ??
@@ -134,7 +142,7 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
 
   const animateTo = (target: number) => {
     cancelAnimationFrame(animRef.current);
-    const start = rotation;
+    const start = rotationRef.current;
     const startT = performance.now();
     const duration = 520;
     const easeOutCubic = (x: number) => 1 - Math.pow(1 - x, 3);
@@ -149,7 +157,7 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
 
   const snap = (direction: number) => {
     if (pageCount <= 1) return;
-    const rawCurrent = Math.round(-rotation / step);
+    const rawCurrent = Math.round(-rotationRef.current / step);
     const rawTarget = rawCurrent + direction;
     const target = -rawTarget * step;
     const normalized = ((rawTarget % pageCount) + pageCount) % pageCount;
@@ -166,9 +174,9 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
    */
   const settleAfterSwipe = (dxTotal: number, velocity: number) => {
     if (pageCount <= 1) return;
-    const DIST_THRESHOLD = 45; // px of horizontal travel to commit a page turn
-    const VEL_THRESHOLD = 350; // px/s flick to commit even on a short swipe
-    const current = Math.round(-rotation / step);
+    const DIST_THRESHOLD = 40; // px of horizontal travel to commit a page turn
+    const VEL_THRESHOLD = 300; // px/s flick to commit even on a short swipe
+    const current = Math.round(-rotationRef.current / step);
     let dir = 0;
     if (Math.abs(dxTotal) > DIST_THRESHOLD || Math.abs(velocity) > VEL_THRESHOLD) {
       // Dragging right (positive dx) rotates the wheel toward the previous page.
@@ -181,106 +189,153 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
     animateTo(target);
   };
 
-  const dragRef = useRef({
-    active: false,
-    pointerId: 0,
-    startX: 0,
-    startY: 0,
-    lastX: 0,
-    lastT: 0,
-    velocity: 0,
-    accRotation: 0,
-    moved: false,
-    captured: false,
-    startTarget: null as HTMLElement | null,
-  });
-
   const SENSITIVITY = 0.008;
+  const HORIZ_LOCK = 8; // px of horizontal travel before we own the gesture
+  const VERT_BAIL = 10; // px of vertical travel that releases to page scroll
 
-  const onPointerDown = (e: React.PointerEvent) => {
-    const tgt = e.target as HTMLElement;
-    if (tgt.closest("a, input, textarea, select")) return;
-    cancelAnimationFrame(animRef.current);
-    dragRef.current.active = true;
-    dragRef.current.pointerId = e.pointerId;
-    dragRef.current.moved = false;
-    dragRef.current.startX = e.clientX;
-    dragRef.current.startY = e.clientY;
-    dragRef.current.lastX = e.clientX;
-    dragRef.current.lastT = performance.now();
-    dragRef.current.velocity = 0;
-    dragRef.current.accRotation = rotation;
-    dragRef.current.startTarget = tgt;
-    dragRef.current.captured = false;
-    // NOTE: pointer capture is deferred to onPointerMove. The container uses
-    // `touch-action: none` so JS receives every gesture; capturing here would
-    // trap vertical swipes and block page scroll over the wheel. We only
-    // capture once a horizontal (rotate) gesture is confirmed.
-  };
+  // Keep the latest settle/tap logic reachable from the (stable) native
+  // listeners without re-binding them on every rotation change.
+  const settleRef = useRef(settleAfterSwipe);
+  settleRef.current = settleAfterSwipe;
 
-  const onPointerMove = (e: React.PointerEvent) => {
-    if (!dragRef.current.active) return;
-    const dx = e.clientX - dragRef.current.lastX;
-    const totalDx = Math.abs(e.clientX - dragRef.current.startX);
-    const totalDy = Math.abs(e.clientY - dragRef.current.startY);
-    if (totalDx > 5 && totalDx > totalDy) {
-      dragRef.current.moved = true;
-      // Confirmed horizontal drag → capture so the rotation keeps tracking
-      // even if the finger drifts off the wheel.
-      if (!dragRef.current.captured) {
-        try {
-          (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
-          dragRef.current.captured = true;
-        } catch {
-          /* ignore */
+  // Native touch + mouse interaction. We use non-passive listeners so we can
+  // preventDefault() once a horizontal swipe is confirmed — this is what makes
+  // the wheel actually rotate on phones (React synthetic pointer events +
+  // pointer-capture were being cut short mid-swipe by pointercancel/leave).
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const drag = {
+      active: false,
+      decided: null as null | "horizontal" | "vertical",
+      startX: 0,
+      startY: 0,
+      lastX: 0,
+      lastT: 0,
+      velocity: 0,
+      accRotation: 0,
+      moved: false,
+      startTarget: null as HTMLElement | null,
+    };
+
+    const begin = (x: number, y: number, target: EventTarget | null) => {
+      const tgt = target as HTMLElement;
+      if (tgt?.closest("a, input, textarea, select, button")) return false;
+      cancelAnimationFrame(animRef.current);
+      drag.active = true;
+      drag.decided = null;
+      drag.moved = false;
+      drag.startX = drag.lastX = x;
+      drag.startY = y;
+      drag.lastT = performance.now();
+      drag.velocity = 0;
+      drag.accRotation = rotationRef.current;
+      drag.startTarget = tgt;
+      return true;
+    };
+
+    /** @returns true if the event should be preventDefault()ed (we own it). */
+    const move = (x: number, y: number) => {
+      if (!drag.active) return false;
+      const totalDx = x - drag.startX;
+      const totalDy = y - drag.startY;
+
+      if (drag.decided === null) {
+        if (Math.abs(totalDy) > VERT_BAIL && Math.abs(totalDy) > Math.abs(totalDx)) {
+          drag.decided = "vertical";
+          drag.active = false; // let the browser scroll the page
+          return false;
+        }
+        if (Math.abs(totalDx) > HORIZ_LOCK) {
+          drag.decided = "horizontal";
+          drag.moved = true;
+        } else {
+          return false; // not enough movement to decide yet
         }
       }
-    }
-    if (totalDy > totalDx && totalDy > 12 && !dragRef.current.moved) {
-      // Vertical intent and we never captured → let the browser scroll the page.
-      dragRef.current.active = false;
-      return;
-    }
-    const now = performance.now();
-    const dt = Math.max(1, now - dragRef.current.lastT);
-    dragRef.current.velocity = (dx / dt) * 1000;
-    dragRef.current.lastX = e.clientX;
-    dragRef.current.lastT = now;
-    dragRef.current.accRotation += dx * SENSITIVITY;
-    setRotation(dragRef.current.accRotation);
-  };
+      if (drag.decided !== "horizontal") return false;
 
-  const endDrag = (e?: React.PointerEvent) => {
-    if (!dragRef.current.active) return;
-    const wasMoved = dragRef.current.moved;
-    const startTarget = dragRef.current.startTarget;
-    dragRef.current.active = false;
+      const now = performance.now();
+      const dt = Math.max(1, now - drag.lastT);
+      const dx = x - drag.lastX;
+      drag.velocity = (dx / dt) * 1000;
+      drag.lastX = x;
+      drag.lastT = now;
+      drag.accRotation += dx * SENSITIVITY;
+      setRotation(drag.accRotation);
+      return true; // owned → preventDefault to stop page scroll
+    };
 
-    if (e && dragRef.current.captured) {
-      try {
-        (e.currentTarget as Element).releasePointerCapture?.(dragRef.current.pointerId);
-      } catch {
-        /* ignore */
+    const finish = () => {
+      const decided = drag.decided;
+      const startTarget = drag.startTarget;
+      const dxTotal = drag.lastX - drag.startX;
+      const velocity = drag.velocity;
+      drag.active = false;
+      drag.startTarget = null;
+
+      // Vertical scroll gesture — the browser handled it; do nothing.
+      if (decided === "vertical") return;
+
+      if (decided === "horizontal" && drag.moved) {
+        settleRef.current(dxTotal, velocity);
+        return;
       }
-    }
-    dragRef.current.captured = false;
 
-    if (wasMoved) {
-      const dxTotal = dragRef.current.lastX - dragRef.current.startX;
-      settleAfterSwipe(dxTotal, dragRef.current.velocity);
-      return;
-    }
+      // No directional decision → it was a tap. Flip the card under the
+      // finger, or close any open card.
+      if (!startTarget) return;
+      const cardEl = startTarget.closest<HTMLElement>("[data-menu-card]");
+      if (cardEl) {
+        const id = cardEl.getAttribute("data-menu-card");
+        if (id) setOpenId((cur) => (cur === id ? null : id));
+      } else {
+        setOpenId(null);
+      }
+    };
 
-    // Tap: find which card the user pressed on
-    const cardEl = startTarget?.closest<HTMLElement>("[data-menu-card]");
-    if (cardEl) {
-      const id = cardEl.getAttribute("data-menu-card");
-      if (id) setOpenId((cur) => (cur === id ? null : id));
-    } else {
-      // tapped outside a card → close any open card
-      setOpenId(null);
-    }
-  };
+    // ── Touch ──
+    const onTouchStart = (e: TouchEvent) => {
+      const tch = e.touches[0];
+      if (tch) begin(tch.clientX, tch.clientY, e.target);
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      const tch = e.touches[0];
+      if (!tch) return;
+      if (move(tch.clientX, tch.clientY) && e.cancelable) e.preventDefault();
+    };
+    const onTouchEnd = () => finish();
+
+    // ── Mouse (desktop) ──
+    const onMouseDown = (e: MouseEvent) => {
+      if (e.button !== 0) return;
+      begin(e.clientX, e.clientY, e.target);
+    };
+    const onMouseMove = (e: MouseEvent) => {
+      if (move(e.clientX, e.clientY)) e.preventDefault();
+    };
+    const onMouseUp = () => finish();
+
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    el.addEventListener("touchend", onTouchEnd);
+    el.addEventListener("touchcancel", onTouchEnd);
+    el.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+
+    return () => {
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove", onTouchMove);
+      el.removeEventListener("touchend", onTouchEnd);
+      el.removeEventListener("touchcancel", onTouchEnd);
+      el.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setRotation]);
 
   const radius = Math.max(280, width * 0.45);
 
@@ -307,12 +362,7 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
       <div
         ref={containerRef}
         className="relative h-[520px] xs:h-[560px] sm:h-[620px] md:h-[680px] select-none cursor-grab active:cursor-grabbing"
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={endDrag}
-        onPointerCancel={endDrag}
-        onPointerLeave={endDrag}
-        style={{ perspective: "1400px", touchAction: "none" }}
+        style={{ perspective: "1400px", touchAction: "pan-y" }}
       >
         {/* Drag overlay — guarantees the whole area receives pointer events */}
         <div className="absolute inset-0 z-[1]" aria-hidden="true" />
