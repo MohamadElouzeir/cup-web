@@ -177,6 +177,7 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
     velocity: 0,
     accRotation: 0,
     moved: false,
+    captured: false,
     startTarget: null as HTMLElement | null,
   });
 
@@ -196,11 +197,11 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
     dragRef.current.velocity = 0;
     dragRef.current.accRotation = rotation;
     dragRef.current.startTarget = tgt;
-    try {
-      (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
-    } catch {
-      /* ignore */
-    }
+    dragRef.current.captured = false;
+    // NOTE: pointer capture is deferred to onPointerMove. The container uses
+    // `touch-action: none` so JS receives every gesture; capturing here would
+    // trap vertical swipes and block page scroll over the wheel. We only
+    // capture once a horizontal (rotate) gesture is confirmed.
   };
 
   const onPointerMove = (e: React.PointerEvent) => {
@@ -208,8 +209,21 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
     const dx = e.clientX - dragRef.current.lastX;
     const totalDx = Math.abs(e.clientX - dragRef.current.startX);
     const totalDy = Math.abs(e.clientY - dragRef.current.startY);
-    if (totalDx > 5 && totalDx > totalDy) dragRef.current.moved = true;
+    if (totalDx > 5 && totalDx > totalDy) {
+      dragRef.current.moved = true;
+      // Confirmed horizontal drag → capture so the rotation keeps tracking
+      // even if the finger drifts off the wheel.
+      if (!dragRef.current.captured) {
+        try {
+          (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
+          dragRef.current.captured = true;
+        } catch {
+          /* ignore */
+        }
+      }
+    }
     if (totalDy > totalDx && totalDy > 12 && !dragRef.current.moved) {
+      // Vertical intent and we never captured → let the browser scroll the page.
       dragRef.current.active = false;
       return;
     }
@@ -228,13 +242,14 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
     const startTarget = dragRef.current.startTarget;
     dragRef.current.active = false;
 
-    if (e) {
+    if (e && dragRef.current.captured) {
       try {
         (e.currentTarget as Element).releasePointerCapture?.(dragRef.current.pointerId);
       } catch {
         /* ignore */
       }
     }
+    dragRef.current.captured = false;
 
     if (wasMoved) {
       snapToNearest(dragRef.current.velocity * 0.0008);
@@ -276,13 +291,13 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
     <div className="w-full">
       <div
         ref={containerRef}
-        className="relative h-[520px] xs:h-[560px] sm:h-[620px] md:h-[680px] select-none touch-pan-y cursor-grab active:cursor-grabbing"
+        className="relative h-[520px] xs:h-[560px] sm:h-[620px] md:h-[680px] select-none cursor-grab active:cursor-grabbing"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
         onPointerLeave={endDrag}
-        style={{ perspective: "1400px", touchAction: "pan-y" }}
+        style={{ perspective: "1400px", touchAction: "none" }}
       >
         {/* Drag overlay — guarantees the whole area receives pointer events */}
         <div className="absolute inset-0 z-[1]" aria-hidden="true" />
