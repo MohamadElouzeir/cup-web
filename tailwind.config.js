@@ -36,6 +36,9 @@ export default {
         display: ['"Playfair Display"', "Georgia", "serif"],
         body: ['"Inter"', "system-ui", "sans-serif"],
         arabic: ['"Cairo"', '"Noto Naskh Arabic"', "system-ui", "sans-serif"],
+        // Forte-like casual script for the "Member of Houmani Group" brand mark.
+        // Real Forte is used if installed; otherwise Pacifico (web-loaded).
+        script: ['"Forte"', '"Pacifico"', "cursive"],
       },
       animation: {
         "float-slow": "float 8s ease-in-out infinite",

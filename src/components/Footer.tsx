@@ -8,7 +8,7 @@ const Footer = () => {
 
   return (
     <footer className="relative mt-20 border-t border-white/5 bg-coffee-900/60">
-      <div className="container-page mx-auto px-5 md:px-8 py-14 grid gap-10 md:grid-cols-3">
+      <div className="container-page mx-auto px-5 md:px-8 py-14 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <Link to="/" className="inline-block text-coffee-50" aria-label="Cup S">
             <img
@@ -59,6 +59,14 @@ const Footer = () => {
             </li>
             <li className="text-coffee-50/55 text-sm pt-1">{CONTACT.locationLabel}</li>
           </ul>
+        </div>
+
+        {/* Standalone brand credit — its own block on the right, not tied to
+            the contact column. Forte if installed, else Pacifico. */}
+        <div className="flex flex-col justify-center lg:items-end lg:text-right">
+          <span className="font-script text-amber-glow text-2xl md:text-3xl leading-snug">
+            Member of<br />Houmani Group
+          </span>
         </div>
       </div>
 
