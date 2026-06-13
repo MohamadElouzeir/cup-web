@@ -4,6 +4,11 @@ export default {
   darkMode: "class",
   theme: {
     extend: {
+      screens: {
+        // Small-phone breakpoint. `xs:` classes are already used across the
+        // hero + menu wheel; without this they were silently dropped.
+        xs: "400px",
+      },
       colors: {
         // NOTE: scale is intentionally light->dark so existing usages flip
         // to a light theme. `coffee-50` (used as primary text) is now dark,

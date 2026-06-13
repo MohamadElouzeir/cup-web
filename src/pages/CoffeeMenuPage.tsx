@@ -91,8 +91,10 @@ const CoffeeMenuPage = () => {
   return (
     <section className="pt-20 sm:pt-24 md:pt-28 pb-12 md:pb-16">
       {/* Banner header — full width at the graphic's exact aspect ratio so the
-          whole artwork is always visible: no crop, no bars, nothing on top. */}
-      <div className="relative w-full aspect-[750/350] overflow-hidden">
+          whole artwork is always visible: no crop, no bars, nothing on top.
+          On phones the native 750/350 (≈2.14:1) ratio collapses to a thin
+          strip, so use a taller ratio below `sm` to keep the artwork legible. */}
+      <div className="relative w-full aspect-[16/10] sm:aspect-[750/350] overflow-hidden">
         {/* Hot banner (image) */}
         <img
           src="/menu/banners/hot.png"

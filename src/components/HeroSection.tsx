@@ -67,7 +67,7 @@ const HeroSection = () => {
 
         <h1
           ref={titleRef}
-          className="h-display text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-coffee-50 mb-3 leading-[0.95]"
+          className="h-display text-[2.75rem] xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-coffee-50 mb-3 leading-[0.95] break-words"
         >
           <span className="block">
             <AnimatedHeroTitle text={t("hero.title.line1")} />
