@@ -166,23 +166,27 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
   };
 
   /**
-   * Decide where to land after a swipe ends. A full page rotation requires a
-   * very long drag (step / SENSITIVITY ≈ a whole screen width), so a normal
-   * swipe would barely turn the wheel and snap straight back. Instead, advance
-   * a page when the gesture clears a modest distance OR is a quick flick, using
-   * the swipe direction rather than the (small) accumulated rotation.
+   * Decide where to land after a swipe ends. The wheel already rotated a little
+   * during the drag, so we must base the decision on the page the drag STARTED
+   * from (`startRotation`) — using the live rotation double-counts that partial
+   * turn and jumps two pages. A normal swipe commits exactly one page in the
+   * swipe direction when it clears a modest distance OR is a quick flick.
    */
-  const settleAfterSwipe = (dxTotal: number, velocity: number) => {
+  const settleAfterSwipe = (
+    dxTotal: number,
+    velocity: number,
+    startRotation: number
+  ) => {
     if (pageCount <= 1) return;
     const DIST_THRESHOLD = 40; // px of horizontal travel to commit a page turn
     const VEL_THRESHOLD = 300; // px/s flick to commit even on a short swipe
-    const current = Math.round(-rotationRef.current / step);
+    const startPage = Math.round(-startRotation / step);
     let dir = 0;
     if (Math.abs(dxTotal) > DIST_THRESHOLD || Math.abs(velocity) > VEL_THRESHOLD) {
       // Dragging right (positive dx) rotates the wheel toward the previous page.
       dir = dxTotal < 0 ? 1 : -1;
     }
-    const rawTarget = current + dir;
+    const rawTarget = startPage + dir;
     const target = -rawTarget * step;
     const normalized = ((rawTarget % pageCount) + pageCount) % pageCount;
     setPage(normalized);
@@ -215,6 +219,7 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
       lastT: 0,
       velocity: 0,
       accRotation: 0,
+      startRotation: 0,
       moved: false,
       startTarget: null as HTMLElement | null,
     };
@@ -231,6 +236,7 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
       drag.lastT = performance.now();
       drag.velocity = 0;
       drag.accRotation = rotationRef.current;
+      drag.startRotation = rotationRef.current;
       drag.startTarget = tgt;
       return true;
     };
@@ -272,6 +278,7 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
       const startTarget = drag.startTarget;
       const dxTotal = drag.lastX - drag.startX;
       const velocity = drag.velocity;
+      const startRotation = drag.startRotation;
       drag.active = false;
       drag.startTarget = null;
 
@@ -279,7 +286,7 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
       if (decided === "vertical") return;
 
       if (decided === "horizontal" && drag.moved) {
-        settleRef.current(dxTotal, velocity);
+        settleRef.current(dxTotal, velocity, startRotation);
         return;
       }
 
