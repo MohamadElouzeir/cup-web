@@ -157,10 +157,24 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
     animateTo(target);
   };
 
-  const snapToNearest = (velocity = 0) => {
+  /**
+   * Decide where to land after a swipe ends. A full page rotation requires a
+   * very long drag (step / SENSITIVITY ≈ a whole screen width), so a normal
+   * swipe would barely turn the wheel and snap straight back. Instead, advance
+   * a page when the gesture clears a modest distance OR is a quick flick, using
+   * the swipe direction rather than the (small) accumulated rotation.
+   */
+  const settleAfterSwipe = (dxTotal: number, velocity: number) => {
     if (pageCount <= 1) return;
-    const projected = rotation + velocity * 0.2;
-    const rawTarget = Math.round(-projected / step);
+    const DIST_THRESHOLD = 45; // px of horizontal travel to commit a page turn
+    const VEL_THRESHOLD = 350; // px/s flick to commit even on a short swipe
+    const current = Math.round(-rotation / step);
+    let dir = 0;
+    if (Math.abs(dxTotal) > DIST_THRESHOLD || Math.abs(velocity) > VEL_THRESHOLD) {
+      // Dragging right (positive dx) rotates the wheel toward the previous page.
+      dir = dxTotal < 0 ? 1 : -1;
+    }
+    const rawTarget = current + dir;
     const target = -rawTarget * step;
     const normalized = ((rawTarget % pageCount) + pageCount) % pageCount;
     setPage(normalized);
@@ -252,7 +266,8 @@ const MenuWheel = ({ items, itemsPerPage }: Props) => {
     dragRef.current.captured = false;
 
     if (wasMoved) {
-      snapToNearest(dragRef.current.velocity * 0.0008);
+      const dxTotal = dragRef.current.lastX - dragRef.current.startX;
+      settleAfterSwipe(dxTotal, dragRef.current.velocity);
       return;
     }
 
