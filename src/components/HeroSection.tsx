@@ -77,7 +77,7 @@ const HeroSection = () => {
 
         <p
           ref={subRef}
-          className="text-base md:text-xl text-coffee-50/75 max-w-2xl mx-auto leading-relaxed mt-6 px-2"
+          className="hidden md:block text-base md:text-xl text-coffee-50/75 max-w-2xl mx-auto leading-relaxed mt-6 px-2"
         >
           {t("hero.sub")}
         </p>
