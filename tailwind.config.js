@@ -39,6 +39,8 @@ export default {
         // Forte-like casual script for the "Member of Houmani Group" brand mark.
         // Real Forte is used if installed; otherwise Pacifico (web-loaded).
         script: ['"Forte"', '"Pacifico"', "cursive"],
+        // Heavy grotesque for the Houmani Group brand mark — web-safe system font.
+        "arial-black": ['"Arial Black"', '"Arial Bold"', "Gadget", "sans-serif"],
       },
       animation: {
         "float-slow": "float 8s ease-in-out infinite",

@@ -62,10 +62,18 @@ const Footer = () => {
         </div>
 
         {/* Standalone brand credit — its own block on the right, not tied to
-            the contact column. Forte if installed, else Pacifico. */}
+            the contact column. Arial Black (web-safe system font). */}
         <div className="flex flex-col justify-center lg:items-end lg:text-right">
-          <span className="font-script text-amber-glow text-2xl md:text-3xl leading-snug">
-            Member of<br />Houmani Group
+          <span className="font-arial-black text-coffee-50 leading-tight">
+            <span className="block text-xs md:text-sm font-normal text-coffee-50/70">
+              Member of
+            </span>
+            <span className="block text-3xl md:text-4xl uppercase tracking-tight">
+              Houmani
+            </span>
+            <span className="block text-sm md:text-base uppercase tracking-[0.3em]">
+              Group
+            </span>
           </span>
         </div>
       </div>
