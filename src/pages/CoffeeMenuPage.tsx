@@ -112,7 +112,7 @@ const CoffeeMenuPage = () => {
           muted
           playsInline
           poster="/menu/banners/refresher.png"
-          className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-700 ${
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
             category === "cold" ? "opacity-100" : "opacity-0"
           }`}
         >
