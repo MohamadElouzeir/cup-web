@@ -24,7 +24,7 @@ const MovingBorder = ({
 }: Props) => {
   return (
     <div
-      className={`relative w-full overflow-hidden ${className}`}
+      className={`w-full overflow-hidden ${className}`}
       style={{ height }}
       aria-hidden="true"
     >
