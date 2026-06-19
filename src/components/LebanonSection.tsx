@@ -60,7 +60,10 @@ const LebanonSection = () => {
   }, []);
 
   return (
-    <section ref={ref} className="relative section overflow-hidden">
+    <section
+      ref={ref}
+      className="relative section overflow-hidden flex items-center min-h-[80vh] md:min-h-[90vh]"
+    >
       {/* Background video */}
       <div className="absolute inset-0">
         <video
