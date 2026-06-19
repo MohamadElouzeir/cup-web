@@ -56,7 +56,7 @@ const HeroSection = () => {
         />
       </div>
 
-      <div className="relative z-10 container-page px-5 md:px-8 text-center">
+      <div className="relative z-10 container-page px-5 md:px-8 text-center pt-24 sm:pt-20 md:pt-0">
         <div
           ref={tagRef}
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-strong text-xs md:text-sm font-semibold text-amber-glow tracking-widest uppercase mb-6"
