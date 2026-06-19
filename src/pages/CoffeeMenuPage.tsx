@@ -127,10 +127,14 @@ const CoffeeMenuPage = () => {
             category === "soft" ? "opacity-100" : "opacity-0"
           }`}
         />
-      </div>
 
-      {/* Animated promo border strip running along the bottom of the banner. */}
-      <MovingBorder height={40} durationSeconds={12} />
+        {/* Animated promo border overlaid along the banner's bottom edge. */}
+        <MovingBorder
+          height={36}
+          durationSeconds={12}
+          className="absolute bottom-0 left-0 right-0 z-10"
+        />
+      </div>
 
       {/* Content */}
       <div className="container-page mx-auto px-4 sm:px-6 md:px-8 mt-10 sm:mt-12 md:mt-14">
