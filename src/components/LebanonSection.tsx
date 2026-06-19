@@ -69,11 +69,13 @@ const LebanonSection = () => {
           loop
           playsInline
           poster="/images/container-cafe.jpg"
-          className="w-full h-full object-cover opacity-50"
+          className="w-full h-full object-cover opacity-90"
         >
           <source src="/videos/lebanon.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-coffee-900 via-coffee-900/60 to-coffee-900" />
+        {/* Lighter scrim — fades the top/bottom edges into the page so text
+            stays readable, but lets the video show through clearly in between. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-coffee-900 via-coffee-900/20 to-coffee-900" />
       </div>
 
       <div className="relative z-10 container-page mx-auto text-center max-w-3xl px-2">
