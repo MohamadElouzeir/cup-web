@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "@/hooks/useTranslation";
 import { parseCSV } from "@/lib/csv";
 import MenuWheel, { MenuItem } from "@/components/MenuWheel";
+import MovingBorder from "@/components/MovingBorder";
 
 type CategoryKey = "hot" | "cold" | "soft";
 
@@ -127,6 +128,9 @@ const CoffeeMenuPage = () => {
           }`}
         />
       </div>
+
+      {/* Animated promo border strip running along the bottom of the banner. */}
+      <MovingBorder height={40} durationSeconds={12} />
 
       {/* Content */}
       <div className="container-page mx-auto px-4 sm:px-6 md:px-8 mt-10 sm:mt-12 md:mt-14">

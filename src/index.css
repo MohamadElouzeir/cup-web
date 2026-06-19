@@ -222,6 +222,13 @@ html[dir="rtl"] .h-display {
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+/* Moving promo border (ported from Flutter _MovingPromoBottomBorder).
+   The 200%-wide, 2-tile track slides left→right by one container width. */
+@keyframes moving-border {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
 /* Marquee */
 @keyframes marqueeX {
   from { transform: translateX(0); }
