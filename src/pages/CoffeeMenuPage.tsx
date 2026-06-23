@@ -37,7 +37,7 @@ const CoffeeMenuPage = () => {
       key: "soft",
       csvName: "Soft Drinks",
       label: t("menu.soft"),
-      banner: { type: "image", src: "/menu/banners/soft.png" },
+      banner: { type: "image", src: "/menu/banners/soft.jpg" },
     },
   ];
 
@@ -121,7 +121,7 @@ const CoffeeMenuPage = () => {
 
         {/* Soft drinks banner (image) */}
         <img
-          src="/menu/banners/soft.png"
+          src="/menu/banners/soft.jpg"
           alt={t("menu.soft")}
           className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-700 ${
             category === "soft" ? "opacity-100" : "opacity-0"
